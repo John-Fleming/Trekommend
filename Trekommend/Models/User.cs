@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Trekommend.Models
 {
-    public class Users
+    public class User
     {
         public int UserId { get; set; }
-        public int Uuid { get; set; }
+        public string Uuid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
