@@ -8,7 +8,7 @@ using Trekommend.Data;
 
 namespace Trekommend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
