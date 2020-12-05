@@ -25,7 +25,7 @@ namespace Trekommend.Data
             return usersTrips;
         }
         
-        public IEnumerable<Trip> GetTrip(int tripId)
+        public Trip GetTrip(int tripId)
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -33,7 +33,7 @@ namespace Trekommend.Data
 
             var parameters = new { tid = tripId };
 
-            var singleTrip = db.Query<Trip>(sql, parameters);
+            var singleTrip = db.QueryFirstOrDefault<Trip>(sql, parameters);
 
             return singleTrip;
         }
