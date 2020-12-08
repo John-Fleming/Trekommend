@@ -10,6 +10,7 @@ import {
 
 import UserProfile from '../components/pages/UserProfile/UserProfile';
 import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
+import Trips from '../components/pages/Trips/Trips';
 
 class App extends React.Component {
   render() {
@@ -19,10 +20,10 @@ class App extends React.Component {
           <React.Fragment>
             <MyNavbar></MyNavbar>
               <Switch>
+                {/* <Route path='/trip/:tripId' component={SingleTrip}/> */}
+                {/* <Route path='/recommendation/:recommendationId' component={SingleRecommendation}/> */}
+                <Route path='/trips/:userId' component={Trips}/>
                 <Route path='/profile' component={UserProfile}/>
-                {/* <Route path='/trips/:tripId' component={SingleTrip}/>
-                <Route path='/recommendation/:recommendationId' component={SingleRecommendation}/>
-                <Route path='/trips' component={Trips}/> */}
                 {/* <Route path='/discover' component={SearchResults}/> */}
                 {/* <Route path='/login' component={Login}/> */}
                 {/* <Route path='/' component={Home} /> */}
