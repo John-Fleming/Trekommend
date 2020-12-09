@@ -31,6 +31,11 @@ class Trips extends React.Component {
     this.getUsersTrips();
   }
 
+  createNewTrip = () => {
+    // to do - this click event will launch a modal with a form to add a new trip
+    console.error('add a trip');
+  }
+
   render() {
     const { user, trips } = this.state;
 
@@ -38,7 +43,7 @@ class Trips extends React.Component {
 
     return (
       <div className="Trips">
-        {user.firstName} {user.lastName}'s Trips <button className="btn"><i className="fas fa-plus"></i></button>
+        {user.firstName} {user.lastName}'s Trips <button className="btn" onClick={this.createNewTrip}><i className="fas fa-plus"></i></button>
         <div className="trips-container">
           {buildTripCards}
         </div>
