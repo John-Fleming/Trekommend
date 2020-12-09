@@ -1,12 +1,15 @@
 import React from 'react';
+import { parseJSON, getYear } from 'date-fns';
+import { Link } from 'react-router-dom';
+import './UserProfile.scss';
 
 import UserData from '../../../helpers/data/UserData';
-
-import './UserProfile.scss';
+import TripData from '../../../helpers/data/TripData';
 
 class UserProfile extends React.Component {
   state = {
     user: {},
+    tripCount: [],
   }
 
   getUser = () => {
@@ -16,16 +19,30 @@ class UserProfile extends React.Component {
       .catch((err) => console.error('could not get user object', err));
   }
 
+  getTripsCount = () => {
+    const userId = 1; // will reset this to use authed user later
+    TripData.getUserTripCount(userId)
+      .then((resp) => this.setState({ tripCount: resp }))
+      .catch((err) => console.error('could not get user trips', err));
+  }
+
   componentDidMount() {
     this.getUser();
+    this.getTripsCount();
   }
 
   render() {
-    const { user } = this.state;
+    const { user, tripCount } = this.state;
 
     return (
-      <div className="UserProfile">
-        <h2>{user.firstName} {user.lastName}</h2>
+      <div className="UserProfile row">
+        <div className="user-container col">
+          <h2>{user.firstName} {user.lastName}</h2>
+          <p className="subtle-text">Member since {getYear(parseJSON(user.dateJoined))}</p>
+        </div>
+        <div className="user-stats-container col">
+          <h4><span><Link to={`/trips/${user.userId}`}>{tripCount}</Link></span> Trips</h4>
+        </div>
       </div>
     );
   }

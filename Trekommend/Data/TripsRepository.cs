@@ -16,7 +16,7 @@ namespace Trekommend.Data
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sql = $"select * from trips where UserId = @uid";
+            var sql = $"select * from Trips where UserId = @uid Order By Name";
 
             var parameters = new { uid = userId };
 

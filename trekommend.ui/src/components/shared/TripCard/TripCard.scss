@@ -1,0 +1,21 @@
+.TripCard {
+  margin: .6rem .8rem;
+  
+  .trip-cover-photo {
+    border-radius: .2rem;
+  }
+
+  .TripCard-details {
+    position: relative;
+
+    .TripCard-user-name {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      font-size: .8rem;
+    }
+
+  }
+}
+
