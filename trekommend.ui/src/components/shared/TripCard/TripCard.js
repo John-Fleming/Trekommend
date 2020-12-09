@@ -15,14 +15,14 @@ class TripCard extends React.Component {
   render() {
     const { trip, user } = this.props;
     return (
-      <div className="TripCard col-md-5">
+      <div className="TripCard base-card col-md-5">
           <Link to={`/trip/${trip.tripId}`}>
             <img className="card-img-top trip-cover-photo" src={trip.coverPhoto} alt="{trip.name} card cover"/>
           </Link>
-        <div className="TripCard-details">
+        <div className="base-card-details">
           <h6>{trip.name}   |   {trip.isPlanned ? 'Planned' : `${format(parseJSON(trip.startDate), 'MMMM yyyy')}`}</h6>
           <p>{trip.location}</p>
-          <span className="TripCard-user-name subtle-text">{user.firstName} {user.lastName}</span>
+          <span className="base-card-user-name subtle-text">{user.firstName} {user.lastName}</span>
         </div>
       </div>
     );

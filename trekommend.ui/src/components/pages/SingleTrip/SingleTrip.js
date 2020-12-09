@@ -1,13 +1,17 @@
 import React from 'react';
 import './SingleTrip.scss';
 
+import RecommendationCard from '../../shared/RecommendationCard/RecommendationCard';
+
 import TripData from '../../../helpers/data/TripData';
 import RecommendationData from '../../../helpers/data/RecommendationData';
+import UserData from '../../../helpers/data/UserData';
 
 class SingleTrip extends React.Component {
   state = {
     trip: {},
     recommendations: [],
+    user: {},
   }
 
   getTrip = () => {
@@ -24,9 +28,17 @@ class SingleTrip extends React.Component {
       .catch((err) => console.error('could not get recommendations', err));
   }
 
+  getUser = () => {
+    const userId = 1; // will reset this to use authed user later
+    UserData.getUserByUserId(userId)
+      .then((resp) => this.setState({ user: resp }))
+      .catch((err) => console.error('could not get user object', err));
+  }
+
   componentDidMount() {
     this.getTrip();
     this.getRecommendations();
+    this.getUser();
   }
 
   createNewRec = () => {
@@ -35,9 +47,9 @@ class SingleTrip extends React.Component {
   }
 
   render() {
-    const { trip, recommendations } = this.state;
+    const { trip, recommendations, user } = this.state;
 
-    const buildRecommendationCards = recommendations.map((rec, index) => <p>{rec.title}</p>);
+    const buildRecommendationCards = recommendations.map((rec, index) => <RecommendationCard key={index} rec={rec} user={user}/>);
 
     return (
       <div className="SingleTrip">
@@ -45,8 +57,12 @@ class SingleTrip extends React.Component {
           <h2 className="display-4">{trip.name}</h2>
           <p className="lead">{trip.location}</p>
         </div>
-        <div className="SingleTrip-recommendations-container">
+
+        <div>
           Recommendations <button className="btn" onClick={this.createNewRec}><i className="fas fa-plus"></i></button>
+        </div>
+
+        <div className="SingleTrip-recommendations-container">
           {buildRecommendationCards}
         </div>
       </div>

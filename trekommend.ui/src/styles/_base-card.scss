@@ -1,0 +1,17 @@
+.base-card {
+  margin: .6rem .8rem;
+
+  .base-card-details {
+    position: relative;
+
+    .base-card-user-name {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      font-size: .8rem;
+    }
+
+  }
+}
+
