@@ -13,4 +13,10 @@ const getUserTripCount = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getTripsByUserId, getUserTripCount}; //eslint-disable-line
+const getSingleTrip = (tripId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/trips/singleTrip/${tripId}`)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
+export default {getTripsByUserId, getUserTripCount, getSingleTrip}; //eslint-disable-line
