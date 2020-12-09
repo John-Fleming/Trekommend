@@ -3,7 +3,15 @@ import { Link } from 'react-router-dom';
 import { parseJSON, format } from 'date-fns';
 import './TripCard.scss';
 
+import UserShape from '../../../helpers/propz/UserShape';
+import TripShape from '../../../helpers/propz/TripShape';
+
 class TripCard extends React.Component {
+  static propTypes = {
+    user: UserShape.UserShape,
+    trip: TripShape.TripShape,
+  }
+
   render() {
     const { trip, user } = this.props;
     return (
