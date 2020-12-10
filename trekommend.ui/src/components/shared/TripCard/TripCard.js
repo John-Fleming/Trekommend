@@ -17,7 +17,7 @@ class TripCard extends React.Component {
     return (
       <div className="TripCard base-card col-md-5">
           <Link to={`/trip/${trip.tripId}`}>
-            <img className="card-img-top trip-cover-photo" src={trip.coverPhoto} alt="{trip.name} card cover"/>
+            <img className="card-img-top trip-cover-photo" src={trip.coverPhoto} alt={`${trip.name} card cover`}/>
           </Link>
         <div className="base-card-details">
           <h6>{trip.name}   |   {trip.isPlanned ? 'Planned' : `${format(parseJSON(trip.startDate), 'MMMM yyyy')}`}</h6>

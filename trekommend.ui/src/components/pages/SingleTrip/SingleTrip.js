@@ -6,6 +6,7 @@ import RecommendationCard from '../../shared/RecommendationCard/RecommendationCa
 import TripData from '../../../helpers/data/TripData';
 import RecommendationData from '../../../helpers/data/RecommendationData';
 import UserData from '../../../helpers/data/UserData';
+import RecPhotoData from '../../../helpers/data/RecPhotoData';
 
 class SingleTrip extends React.Component {
   state = {
@@ -59,7 +60,7 @@ class SingleTrip extends React.Component {
         </div>
 
         <div>
-          Recommendations <button className="btn" onClick={this.createNewRec}><i className="fas fa-plus"></i></button>
+          {user.firstName} {user.lastName}'s Recommendations <button className="btn" onClick={this.createNewRec}><i className="fas fa-plus"></i></button>
         </div>
 
         <div className="SingleTrip-recommendations-container">

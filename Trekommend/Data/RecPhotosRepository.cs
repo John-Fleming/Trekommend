@@ -12,7 +12,7 @@ namespace Trekommend.Data
     {
         const string _connectionString = "Server = localhost; Database = Trekommend; Trusted_Connection = True;";
 
-        public IEnumerable<RecommendationPhoto> GetRecPhotos(int recId)
+        public List<RecommendationPhoto> GetRecPhotos(int recId)
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -22,7 +22,7 @@ namespace Trekommend.Data
 
             var recPhotos = db.Query<RecommendationPhoto>(sql, parameters);
 
-            return recPhotos;
+            return recPhotos.ToList();
         }
     }
 }

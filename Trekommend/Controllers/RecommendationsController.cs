@@ -14,16 +14,28 @@ namespace Trekommend.Controllers
     public class RecommendationsController : ControllerBase
     {
         RecommendationsRepository _repo;
+        RecPhotosRepository _photosRepo;
 
         public RecommendationsController()
         {
             _repo = new RecommendationsRepository();
+            _photosRepo = new RecPhotosRepository();
         }
 
         [HttpGet("{userId}")]
         public IActionResult GetRecommendationsByUserId(int userId)
         {
             var usersRecs = _repo.GetUsersRecommendations(userId);
+
+            // take the recs, loop over them, grab each recId, call the photosRepo GetRecPhotos method, return a new object with the colleciton of photos on it too
+
+            
+            var test = usersRecs.ToList().First();
+            Type whatIsIt = test.GetType();
+            //usersRecs.ToList().ForEach(rec => rec.recPhotos = _photosRepo.GetRecPhotos(rec.RecId));
+
+            // I need to figure out how to get add those photos as a property on the rec model
+
             return Ok(usersRecs);
         }
 
@@ -40,5 +52,7 @@ namespace Trekommend.Controllers
             var singleRec = _repo.GetRec(recId);
             return Ok(singleRec);
         }
+
+
     }
 }
