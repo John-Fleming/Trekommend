@@ -6,7 +6,6 @@ import RecommendationCard from '../../shared/RecommendationCard/RecommendationCa
 import TripData from '../../../helpers/data/TripData';
 import RecommendationData from '../../../helpers/data/RecommendationData';
 import UserData from '../../../helpers/data/UserData';
-import RecPhotoData from '../../../helpers/data/RecPhotoData';
 
 class SingleTrip extends React.Component {
   state = {
@@ -24,7 +23,7 @@ class SingleTrip extends React.Component {
 
   getRecommendations = () => {
     const { tripId } = this.props.match.params;
-    RecommendationData.getRecommendationsByTripId(tripId)
+    RecommendationData.getRecsWithPhotos(tripId)
       .then((resp) => this.setState({ recommendations: resp }))
       .catch((err) => console.error('could not get recommendations', err));
   }

@@ -30,8 +30,8 @@ namespace Trekommend.Controllers
             // take the recs, loop over them, grab each recId, call the photosRepo GetRecPhotos method, return a new object with the colleciton of photos on it too
 
             
-            var test = usersRecs.ToList().First();
-            Type whatIsIt = test.GetType();
+            //var test = usersRecs.ToList().First();
+            //Type whatIsIt = test.GetType();
             //usersRecs.ToList().ForEach(rec => rec.recPhotos = _photosRepo.GetRecPhotos(rec.RecId));
 
             // I need to figure out how to get add those photos as a property on the rec model
