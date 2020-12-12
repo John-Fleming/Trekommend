@@ -14,11 +14,15 @@ namespace Trekommend.Data
 
         public List<RecommendationPhoto> GetRecPhotos(int recId)
         {
+           return  GetRecPhotos(new[] { recId });
+        }
+        public List<RecommendationPhoto> GetRecPhotos(IEnumerable<int> recIds)
+        {
             using var db = new SqlConnection(_connectionString);
 
-            var sql = $"select * from Recommendation_Photos where RecId = @rid";
+            var sql = $"select * from Recommendation_Photos where RecId in @recIds";
 
-            var parameters = new { rid = recId };
+            var parameters = new { recIds };
 
             var recPhotos = db.Query<RecommendationPhoto>(sql, parameters);
 

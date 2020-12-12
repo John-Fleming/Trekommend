@@ -23,7 +23,7 @@ class SingleTrip extends React.Component {
 
   getRecommendations = () => {
     const { tripId } = this.props.match.params;
-    RecommendationData.getRecsWithPhotos(tripId)
+    RecommendationData.getRecommendationsByTripId(tripId)
       .then((resp) => this.setState({ recommendations: resp }))
       .catch((err) => console.error('could not get recommendations', err));
   }
