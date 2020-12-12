@@ -14,16 +14,26 @@ namespace Trekommend.Controllers
     public class RecommendationsController : ControllerBase
     {
         RecommendationsRepository _repo;
+        RecPhotosRepository _photosRepo;
 
         public RecommendationsController()
         {
             _repo = new RecommendationsRepository();
+            _photosRepo = new RecPhotosRepository();
         }
 
         [HttpGet("{userId}")]
         public IActionResult GetRecommendationsByUserId(int userId)
         {
             var usersRecs = _repo.GetUsersRecommendations(userId);
+
+            var photos = _photosRepo.GetRecPhotos(usersRecs.Select(r => r.RecId));
+
+            foreach (var rec in usersRecs)
+            {
+                rec.Photos = photos.Where(p => p.RecId == rec.RecId);
+            }
+
             return Ok(usersRecs);
         }
 
@@ -31,6 +41,14 @@ namespace Trekommend.Controllers
         public IActionResult GetRecommendationsByTripId(int tripId)
         {
             var singleTripRecs = _repo.GetRecsByTrip(tripId);
+
+            var photos = _photosRepo.GetRecPhotos(singleTripRecs.Select(r => r.RecId));
+
+            foreach (var rec in singleTripRecs)
+            {
+                rec.Photos = photos.Where(p => p.RecId == rec.RecId);
+            }
+
             return Ok(singleTripRecs);
         }
         
@@ -38,7 +56,14 @@ namespace Trekommend.Controllers
         public IActionResult GetSingleRecommendation(int recId)
         {
             var singleRec = _repo.GetRec(recId);
+
+            var photos = _photosRepo.GetRecPhotos(singleRec.RecId);
+
+            singleRec.Photos = photos;
+
             return Ok(singleRec);
         }
+
+
     }
 }
