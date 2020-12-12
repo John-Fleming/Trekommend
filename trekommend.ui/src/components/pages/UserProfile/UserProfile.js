@@ -5,11 +5,14 @@ import './UserProfile.scss';
 
 import UserData from '../../../helpers/data/UserData';
 import TripData from '../../../helpers/data/TripData';
+import RelationshipsData from '../../../helpers/data/RelationshipsData';
 
 class UserProfile extends React.Component {
   state = {
     user: {},
     tripCount: '',
+    followers: [],
+    following: [],
   }
 
   getUser = () => {
@@ -26,13 +29,34 @@ class UserProfile extends React.Component {
       .catch((err) => console.error('could not get user trips', err));
   }
 
+  getFollowers = () => {
+    const userId = 1;
+    RelationshipsData.getUserFollowers(userId)
+      .then((resp) => this.setState({ followers: resp }))
+      .catch((err) => console.error('could not get user followers', err));
+  }
+
+  getFollowing = () => {
+    const userId = 1;
+    RelationshipsData.getUsersBeingFollowed(userId)
+      .then((resp) => this.setState({ following: resp }))
+      .catch((err) => console.error('could not get users being followed', err));
+  }
+
   componentDidMount() {
     this.getUser();
     this.getTripsCount();
+    this.getFollowers();
+    this.getFollowing();
   }
 
   render() {
-    const { user, tripCount } = this.state;
+    const {
+      user,
+      tripCount,
+      followers,
+      following,
+    } = this.state;
     // to do: add recent activity feed component below user stats (render followers activity on authed user profile or user being viewed recent activity if on their profile)
     return (
       <div className="UserProfile row">
@@ -41,7 +65,11 @@ class UserProfile extends React.Component {
           <p className="subtle-text">Member since {getYear(parseJSON(user.dateJoined))}</p>
         </div>
         <div className="user-stats-container col">
-          <h4><span><Link to={`/trips/${user.userId}`}>{tripCount}</Link></span> Trips</h4>
+          <h4>
+            <span><Link to={`/trips/${user.userId}`}>{tripCount}</Link> Trips</span>
+            <span className="ml-4">{followers.length} Followers</span>
+            <span className="ml-4">{following.length} Following</span>
+          </h4>
         </div>
       </div>
     );

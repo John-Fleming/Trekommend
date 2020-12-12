@@ -43,7 +43,7 @@ class Trips extends React.Component {
 
     return (
       <div className="Trips">
-        {user.firstName} {user.lastName}'s Trips <button className="btn" onClick={this.createNewTrip}><i className="fas fa-plus"></i></button>
+        {user.firstName} {user.lastName}'s Trips [{trips.length}] <button className="btn" onClick={this.createNewTrip}><i className="fas fa-plus"></i></button>
         <div className="trips-container">
           {buildTripCards}
         </div>
