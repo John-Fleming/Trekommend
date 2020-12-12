@@ -16,8 +16,8 @@ class UserProfile extends React.Component {
     tripCount: '',
     followers: [],
     following: [],
-    modal: false,
-    // setModal: false,
+    followersModal: false,
+    followingModal: false,
   }
 
   getUser = () => {
@@ -55,8 +55,12 @@ class UserProfile extends React.Component {
     this.getFollowing();
   }
 
-  toggle = () => {
-    this.setState({ modal: !this.state.modal });
+  toggleFollowers = () => {
+    this.setState({ followersModal: !this.state.followersModal });
+  }
+
+  toggleFollowing = () => {
+    this.setState({ followingModal: !this.state.followingModal });
   }
 
   render() {
@@ -65,7 +69,8 @@ class UserProfile extends React.Component {
       tripCount,
       followers,
       following,
-      modal,
+      followersModal,
+      followingModal,
     } = this.state;
     // to do: add recent activity feed component below user stats (render followers activity on authed user profile or user being viewed recent activity if on their profile)
 
@@ -78,11 +83,12 @@ class UserProfile extends React.Component {
         <div className="user-stats-container col">
           <h4>
             <span><Link to={`/trips/${user.userId}`}>{tripCount}</Link> Trips</span>
-            <span className="ml-4"><button onClick={this.toggle}>{followers.length} Followers</button></span>
-            <span className="ml-4">{following.length} Following</span>
+            <span className="ml-4"><button onClick={this.toggleFollowers}>{followers.length} Followers</button></span>
+            <span className="ml-4"><button onClick={this.toggleFollowing}>{following.length} Following</button></span>
           </h4>
         </div>
-        <Modal isOpen={modal} toggle={this.toggle}>Test</Modal>
+        <Modal isOpen={followersModal} toggle={this.toggleFollowers}>Test Followers</Modal>
+        <Modal isOpen={followingModal} toggle={this.toggleFollowing}>Test Following</Modal>
       </div>
     );
   }
