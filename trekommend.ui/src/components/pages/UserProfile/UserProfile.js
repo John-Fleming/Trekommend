@@ -1,6 +1,9 @@
 import React from 'react';
 import { parseJSON, getYear } from 'date-fns';
 import { Link } from 'react-router-dom';
+
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+
 import './UserProfile.scss';
 
 import UserData from '../../../helpers/data/UserData';
@@ -13,6 +16,8 @@ class UserProfile extends React.Component {
     tripCount: '',
     followers: [],
     following: [],
+    modal: false,
+    // setModal: false,
   }
 
   getUser = () => {
@@ -50,14 +55,20 @@ class UserProfile extends React.Component {
     this.getFollowing();
   }
 
+  toggle = () => {
+    this.setState({ modal: !this.state.modal });
+  }
+
   render() {
     const {
       user,
       tripCount,
       followers,
       following,
+      modal,
     } = this.state;
     // to do: add recent activity feed component below user stats (render followers activity on authed user profile or user being viewed recent activity if on their profile)
+
     return (
       <div className="UserProfile row">
         <div className="user-container col">
@@ -67,10 +78,11 @@ class UserProfile extends React.Component {
         <div className="user-stats-container col">
           <h4>
             <span><Link to={`/trips/${user.userId}`}>{tripCount}</Link> Trips</span>
-            <span className="ml-4">{followers.length} Followers</span>
+            <span className="ml-4"><button onClick={this.toggle}>{followers.length} Followers</button></span>
             <span className="ml-4">{following.length} Following</span>
           </h4>
         </div>
+        <Modal isOpen={modal} toggle={this.toggle}>Test</Modal>
       </div>
     );
   }
