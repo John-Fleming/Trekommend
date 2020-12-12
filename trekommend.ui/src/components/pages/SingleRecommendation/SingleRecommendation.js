@@ -4,19 +4,25 @@ import './SingleRecommendation.scss';
 import RecommendationData from '../../../helpers/data/RecommendationData';
 import UserData from '../../../helpers/data/UserData';
 import RecPhotoData from '../../../helpers/data/RecPhotoData';
+import RecCategoryData from '../../../helpers/data/RecCategoryData';
 
 class SingleRecommendation extends React.Component {
   state = {
     rec: {},
     recPhotos: [],
-    user: {},
     recCategory: '',
+    user: {},
   }
 
   getRec = () => {
     const { recommendationId } = this.props.match.params;
     RecommendationData.getSingleRecommendation(recommendationId)
-      .then((resp) => this.setState({ rec: resp }))
+      .then((resp) => {
+        this.setState({ rec: resp });
+        RecCategoryData.getSingleRecCategory(resp.recCategoryId)
+          .then((r) => this.setState({ recCategory: r }))
+          .catch((err) => console.error('could not get rec categories', err));
+      })
       .catch((err) => console.error('could not get recommendation', err));
   }
 
@@ -48,8 +54,14 @@ class SingleRecommendation extends React.Component {
   }
 
   render() {
-    const { rec, recPhotos, user } = this.state;
+    const {
+      rec,
+      recPhotos,
+      recCategory,
+      user,
+    } = this.state;
     // to-do: create a gallery or slideshow shared component for rec photos
+
     return (
       <div className="SingleRecommendation">
         <div className="rec-summary row">
@@ -67,7 +79,7 @@ class SingleRecommendation extends React.Component {
               ? <p>Rating: {rec.rating}/5</p>
               : ''
            }
-            <p>Category: </p>
+            <p>Category: {recCategory}</p>
             <button className="btn btn-outline-dark" onClick={this.addToPlannedTrip} >Save</button>
             <p className="subtle-text">Times Saved: {rec.timesSaved}</p>
           </div>
