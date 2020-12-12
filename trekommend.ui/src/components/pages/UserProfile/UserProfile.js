@@ -73,7 +73,7 @@ class UserProfile extends React.Component {
       followingModal,
     } = this.state;
     // to do: add recent activity feed component below user stats (render followers activity on authed user profile or user being viewed recent activity if on their profile)
-
+    const buildUsersList = (usersList) => usersList.map((u, index) => <p key={index}>{u.firstName} {u.lastName}</p>);
     return (
       <div className="UserProfile row">
         <div className="user-container col">
@@ -87,8 +87,8 @@ class UserProfile extends React.Component {
             <span className="ml-4"><button onClick={this.toggleFollowing}>{following.length} Following</button></span>
           </h4>
         </div>
-        <Modal isOpen={followersModal} toggle={this.toggleFollowers}>Test Followers</Modal>
-        <Modal isOpen={followingModal} toggle={this.toggleFollowing}>Test Following</Modal>
+        <Modal isOpen={followersModal} toggle={this.toggleFollowers}>{buildUsersList(followers)}</Modal>
+        <Modal isOpen={followingModal} toggle={this.toggleFollowing}>{buildUsersList(following)}</Modal>
       </div>
     );
   }
