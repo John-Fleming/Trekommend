@@ -9,7 +9,7 @@ import TripData from '../../../helpers/data/TripData';
 class UserProfile extends React.Component {
   state = {
     user: {},
-    tripCount: [],
+    tripCount: '',
   }
 
   getUser = () => {
