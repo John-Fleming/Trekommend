@@ -10,21 +10,6 @@ class RecomendationCard extends React.Component {
     rec: RecShape.RecShape,
   }
 
-  // state = {
-  //   recPhotos: [],
-  // }
-
-  // getRecPhotos = () => {
-  //   const { recId } = this.props.rec;
-  //   RecPhotoData.getRecommendationsByTripId(recId)
-  //     .then((resp) => this.setState({ recPhotos: resp }))
-  //     .catch((err) => console.error('could not get rec photos', err));
-  // }
-
-  // componentDidMount() {
-  //   this.getRecPhotos();
-  // }
-
   render() {
     const { rec, user } = this.props;
 
@@ -32,12 +17,18 @@ class RecomendationCard extends React.Component {
     return (
       <div className="RecommendationCard card base-card col-md-5">
         <Link to={`/recommendation/${rec.recId}`}>
-            <img className="card-img-top rec-cover-photo" src={rec.photos[0].photoUrl} alt={`${rec.title} card cover`}/>
+          { rec.photos.length > 0
+            ? <img className="card-img-top base-card-cover-photo" src={rec.photos[0].photoUrl} alt={`${rec.title} card cover`}/>
+            : <img className="card-img-top base-card-cover-photo" src="https://i.imgur.com/b2AvRuB.jpg" alt={`${rec.title} card cover`}/>
+          }
         </Link>
         <div className="base-card-details card-body">
           <h6>{rec.title}</h6>
-          <p>Rating: {rec.rating}/5</p>
-          <span className="base-card-user-name subtle-text">{user.firstName} {user.lastName}</span>
+          { rec.rating !== null
+            ? <p>Rating: {rec.rating}/5</p>
+            : ''
+          }
+          <span className="base-card-details-username subtle-text">{user.firstName} {user.lastName}</span>
         </div>
       </div>
     );

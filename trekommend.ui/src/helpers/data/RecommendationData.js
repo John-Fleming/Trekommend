@@ -7,4 +7,10 @@ const getRecommendationsByTripId = (tripId) => new Promise((resolve, reject) => 
     .catch((err) => reject(err));
 });
 
-export default {getRecommendationsByTripId}; // eslint-disable-line
+const getSingleRecommendation = (recId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/recommendations/singleRec/${recId}`)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
+export default {getRecommendationsByTripId, getSingleRecommendation}; // eslint-disable-line

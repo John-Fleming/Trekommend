@@ -33,7 +33,7 @@ class UserProfile extends React.Component {
 
   render() {
     const { user, tripCount } = this.state;
-
+    // to do: add recent activity feed component below user stats (render followers activity on authed user profile or user being viewed recent activity if on their profile)
     return (
       <div className="UserProfile row">
         <div className="user-container col">
