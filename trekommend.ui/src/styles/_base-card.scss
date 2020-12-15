@@ -3,20 +3,34 @@
 
   &-cover-photo {
     width: 100%;
-    height: 350px;
+    height: 250px;
   }
 
   &-details {
     position: relative;
 
+    &-title {
+      font-family: 'Crimson-Text';
+      font-size: 1.1rem;
+      letter-spacing: 1.5px;
+      margin: 1.2rem 0;
+    }
+
+    &-subtitle {
+      font-size: .6rem;
+      letter-spacing: 1.5px;
+      border-top: 1px solid #aaa;
+      margin-top: 1rem;
+      padding-top: .8rem;
+      text-transform: uppercase;
+    }
+
     &-username {
       position: absolute;
       bottom: 0;
       right: 0;
-
       font-size: .8rem;
     }
-
   }
 }
 

@@ -23,9 +23,9 @@ class RecomendationCard extends React.Component {
           }
         </Link>
         <div className="base-card-details">
-          <h6>{rec.title}</h6>
+          <h4 className="base-card-details-title">{rec.title}</h4>
           { rec.rating !== null
-            ? <p>Rating: {rec.rating}/5</p>
+            ? <span className="base-card-details-subtitle">Rating: {rec.rating}/5</span>
             : ''
           }
           <span className="base-card-details-username subtle-text">{user.firstName} {user.lastName}</span>
