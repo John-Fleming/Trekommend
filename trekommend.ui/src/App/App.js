@@ -22,10 +22,10 @@ class App extends React.Component {
           <React.Fragment>
             <MyNavbar></MyNavbar>
               <Switch>
-                <Route path='/trip/:tripId' component={SingleTrip}/>
-                <Route path='/recommendation/:recommendationId' component={SingleRecommendation}/>
+                <Route path='/user/:userId/trip/:tripId' component={SingleTrip}/>
+                <Route path='/user/:userId/recommendation/:recommendationId' component={SingleRecommendation}/>
                 <Route path='/trips/:userId' component={Trips}/>
-                <Route path='/profile' component={UserProfile}/>
+                <Route path='/profile/:userId' component={UserProfile}/>
                 {/* <Route path='/discover' component={SearchResults}/> */}
                 {/* <Route path='/login' component={Login}/> */}
                 {/* <Route path='/' component={Home} /> */}

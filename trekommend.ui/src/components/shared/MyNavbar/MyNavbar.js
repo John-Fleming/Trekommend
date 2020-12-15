@@ -24,7 +24,7 @@ class MyNavbar extends React.Component {
                   <NavLink tag={RRNavLink} to="/profile"><i className="fas fa-plus text-dark"></i></NavLink>
                 </NavItem>
                 <NavItem className="ml-2">
-                  <NavLink tag={RRNavLink} to="/profile"><i className="far fa-user text-dark"></i></NavLink>
+                  <NavLink tag={RRNavLink} to="/profile/1"><i className="far fa-user text-dark"></i></NavLink>
                 </NavItem>
               </Nav>
           </Navbar>

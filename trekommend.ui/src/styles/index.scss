@@ -4,6 +4,7 @@
 @import 'fonts';
 @import 'variables';
 @import 'base-card';
+@import 'base-modal';
 
 body {
   background-color: #f4f4f6;
@@ -11,5 +12,10 @@ body {
 
   .subtle-text {
     color: rgb(170, 169, 169);
+  }
+
+  .custom-link {
+    text-decoration: none;
+    color: black;
   }
 }
