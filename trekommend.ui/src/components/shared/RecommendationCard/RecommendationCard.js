@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './RecommendationCard.scss';
 
 import RecShape from '../../../helpers/propz/RecShape';
-// import RecPhotoData from '../../../helpers/data/RecPhotoData';
 
 class RecomendationCard extends React.Component {
   static propTypes = {
@@ -13,9 +12,8 @@ class RecomendationCard extends React.Component {
   render() {
     const { rec, user } = this.props;
 
-    // to do  - get the recPhotos on the rec objects within the same API call and add to this card
     return (
-      <div className="RecommendationCard base-card col-md-5">
+      <div className="RecommendationCard base-card col-md-4">
         <Link to={`/user/${user.userId}/recommendation/${rec.recId}`} className="custom-link">
           { rec.photos.length > 0
             ? <img className="card-img-top base-card-cover-photo" src={rec.photos[0].photoUrl} alt={`${rec.title} card cover`}/>

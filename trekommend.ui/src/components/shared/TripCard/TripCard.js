@@ -15,7 +15,7 @@ class TripCard extends React.Component {
   render() {
     const { trip, user } = this.props;
     return (
-      <div className="TripCard base-card col-md-5">
+      <div className="TripCard base-card col-md-4">
           <Link to={`/user/${user.userId}/trip/${trip.tripId}`} className="custom-link">
             <img className="card-img-top base-card-cover-photo" src={trip.coverPhoto} alt={`${trip.name} card cover`}/>
           </Link>
