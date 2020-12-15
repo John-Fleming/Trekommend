@@ -20,39 +20,40 @@ class UserProfile extends React.Component {
     followingModal: false,
   }
 
-  getUser = () => {
-    const userId = 1; // will reset this to use authed user later
+  getUser = (userId) => {
     UserData.getUserByUserId(userId)
       .then((resp) => this.setState({ user: resp }))
       .catch((err) => console.error('could not get user object', err));
   }
 
-  getTripsCount = () => {
-    const userId = 1; // will reset this to use authed user later
+  getTripsCount = (userId) => {
     TripData.getUserTripCount(userId)
       .then((resp) => this.setState({ tripCount: resp }))
       .catch((err) => console.error('could not get user trips', err));
   }
 
-  getFollowers = () => {
-    const userId = 1;
+  getFollowers = (userId) => {
     RelationshipsData.getUserFollowers(userId)
       .then((resp) => this.setState({ followers: resp }))
       .catch((err) => console.error('could not get user followers', err));
   }
 
-  getFollowing = () => {
-    const userId = 1;
+  getFollowing = (userId) => {
     RelationshipsData.getUsersBeingFollowed(userId)
       .then((resp) => this.setState({ following: resp }))
       .catch((err) => console.error('could not get users being followed', err));
   }
 
+  getAllUserData = () => {
+    const { userId } = this.props.match.params;
+    this.getUser(userId);
+    this.getTripsCount(userId);
+    this.getFollowers(userId);
+    this.getFollowing(userId);
+  }
+
   componentDidMount() {
-    this.getUser();
-    this.getTripsCount();
-    this.getFollowers();
-    this.getFollowing();
+    this.getAllUserData();
   }
 
   toggleFollowers = () => {
@@ -61,6 +62,18 @@ class UserProfile extends React.Component {
 
   toggleFollowing = () => {
     this.setState({ followingModal: !this.state.followingModal });
+  }
+
+  routeToUser = () => {
+    this.setState({ followersModal: false, followingModal: false });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { userId } = this.props.match.params;
+    const prevUserId = prevProps.match.params.userId;
+    if (prevUserId !== userId) {
+      this.getAllUserData(userId);
+    }
   }
 
   render() {
@@ -73,7 +86,13 @@ class UserProfile extends React.Component {
       followingModal,
     } = this.state;
     // to do: add recent activity feed component below user stats (render followers activity on authed user profile or user being viewed recent activity if on their profile)
-    const buildUsersList = (usersList) => usersList.map((u, index) => <p key={index}>{u.firstName} {u.lastName}</p>);
+    const buildUsersList = (usersList) => usersList.map((u, index) => (
+      <Link to={`/profile/${u.userId}`} onClick={this.routeToUser} className="modal-user custom-link row" key={index}>
+        <img className="modal-user-avatar" src={u.userPhoto} alt={`${u.firstName} ${u.lastName}`}/>
+        <span className="modal-user-name">{u.firstName} {u.lastName}</span>
+        <button className="modal-user-view-profile btn ml-auto"><i className="fas fa-search"></i></button>
+      </Link>));
+
     return (
       <div className="UserProfile row">
         <div className="user-container col">
@@ -82,13 +101,19 @@ class UserProfile extends React.Component {
         </div>
         <div className="user-stats-container col">
           <h4>
-            <span><Link to={`/trips/${user.userId}`}>{tripCount}</Link> Trips</span>
-            <span className="ml-4"><button onClick={this.toggleFollowers}>{followers.length} Followers</button></span>
-            <span className="ml-4"><button onClick={this.toggleFollowing}>{following.length} Following</button></span>
+            <span><Link to={`/trips/${user.userId}`} className="custom-link btn user-stats-container-btns">{tripCount} Trips</Link></span>
+            <span><button onClick={this.toggleFollowers} className="btn user-stats-container-btns">{followers.length} Followers</button></span>
+            <span><button onClick={this.toggleFollowing} className="btn user-stats-container-btns">{following.length} Following</button></span>
           </h4>
         </div>
-        <Modal isOpen={followersModal} toggle={this.toggleFollowers}>{buildUsersList(followers)}</Modal>
-        <Modal isOpen={followingModal} toggle={this.toggleFollowing}>{buildUsersList(following)}</Modal>
+        <Modal isOpen={followersModal} toggle={this.toggleFollowers}>
+          <ModalHeader>Followers</ModalHeader>
+          <ModalBody>{buildUsersList(followers)}</ModalBody>
+        </Modal>
+        <Modal isOpen={followingModal} toggle={this.toggleFollowing}>
+          <ModalHeader>Following</ModalHeader>
+          <ModalBody>{buildUsersList(following)}</ModalBody>
+        </Modal>
       </div>
     );
   }
