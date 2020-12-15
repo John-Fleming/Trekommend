@@ -15,14 +15,14 @@ class RecomendationCard extends React.Component {
 
     // to do  - get the recPhotos on the rec objects within the same API call and add to this card
     return (
-      <div className="RecommendationCard card base-card col-md-5">
+      <div className="RecommendationCard base-card col-md-5">
         <Link to={`/user/${user.userId}/recommendation/${rec.recId}`} className="custom-link">
           { rec.photos.length > 0
             ? <img className="card-img-top base-card-cover-photo" src={rec.photos[0].photoUrl} alt={`${rec.title} card cover`}/>
             : <img className="card-img-top base-card-cover-photo" src="https://i.imgur.com/b2AvRuB.jpg" alt={`${rec.title} card cover`}/>
           }
         </Link>
-        <div className="base-card-details card-body">
+        <div className="base-card-details">
           <h6>{rec.title}</h6>
           { rec.rating !== null
             ? <p>Rating: {rec.rating}/5</p>
