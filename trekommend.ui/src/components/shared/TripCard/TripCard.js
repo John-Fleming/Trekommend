@@ -16,11 +16,14 @@ class TripCard extends React.Component {
     const { trip, user } = this.props;
     return (
       <div className="TripCard base-card col-md-5">
-          <Link to={`/trip/${trip.tripId}`} className="custom-link">
+          <Link to={`/user/${user.userId}/trip/${trip.tripId}`} className="custom-link">
             <img className="card-img-top base-card-cover-photo" src={trip.coverPhoto} alt={`${trip.name} card cover`}/>
           </Link>
         <div className="base-card-details">
-          <h6>{trip.name}   |   {trip.isPlanned ? 'Planned' : `${format(parseJSON(trip.startDate), 'MMMM yyyy')}`}</h6>
+          <h6>
+            <span className="mr-2">{trip.name}</span>|
+            <span className="ml-2">{trip.isPlanned ? 'Planned' : `${format(parseJSON(trip.startDate), 'MMMM yyyy')}`}</span>
+          </h6>
           <p>{trip.location}</p>
           <span className="base-card-details-username subtle-text">{user.firstName} {user.lastName}</span>
         </div>

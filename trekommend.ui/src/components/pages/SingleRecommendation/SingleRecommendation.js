@@ -34,7 +34,7 @@ class SingleRecommendation extends React.Component {
   }
 
   getUser = () => {
-    const userId = 1; // will reset this to use authed user later
+    const { userId } = this.props.match.params;
     UserData.getUserByUserId(userId)
       .then((resp) => this.setState({ user: resp }))
       .catch((err) => console.error('could not get user object', err));
