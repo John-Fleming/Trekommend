@@ -58,9 +58,10 @@ class SingleTrip extends React.Component {
           <span className="lead">{trip.location}</span>
         </div>
 
-        <div>
-          {user.firstName} {user.lastName}'s Recommendations [{recommendations.length}] <button className="btn" onClick={this.createNewRec}><i className="fas fa-plus"></i></button>
-        </div>
+        <span className="SingleTrip-header">
+          {user.firstName} {user.lastName}'s Recommendations [{recommendations.length}]
+        </span>
+        <button className="btn" onClick={this.createNewRec}><i className="fas fa-plus"></i></button>
 
         <div className="SingleTrip-recommendations-container">
           {buildRecommendationCards}

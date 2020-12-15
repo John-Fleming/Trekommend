@@ -4,8 +4,11 @@
     height: 250px;
   }
 
-  &-cover-photo:hover {
-    opacity: .8;
+  &-cover-photo {
+    border-radius: 0;
+    &:hover {
+      opacity: .8;
+    }
   }
 
   &-details {
