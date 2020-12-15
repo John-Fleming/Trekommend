@@ -54,8 +54,8 @@ class SingleTrip extends React.Component {
     return (
       <div className="SingleTrip">
         <div className="jumbotron text-center">
-          <h2 className="display-4">{trip.name}</h2>
-          <p className="lead">{trip.location}</p>
+          <h2 className="display-4 trip-name">{trip.name}</h2>
+          <span className="lead">{trip.location}</span>
         </div>
 
         <div>
