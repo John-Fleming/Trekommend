@@ -106,11 +106,13 @@ class UserProfile extends React.Component {
             <span><button onClick={this.toggleFollowing} className="btn user-stats-container-btns">{following.length} Following</button></span>
           </h4>
         </div>
-        <Modal isOpen={followersModal} toggle={this.toggleFollowers}>
+
+        <Modal className="followersModal" isOpen={followersModal} toggle={this.toggleFollowers}>
           <ModalHeader>Followers</ModalHeader>
           <ModalBody>{buildUsersList(followers)}</ModalBody>
         </Modal>
-        <Modal isOpen={followingModal} toggle={this.toggleFollowing}>
+
+        <Modal className="followingModal" isOpen={followingModal} toggle={this.toggleFollowing}>
           <ModalHeader>Following</ModalHeader>
           <ModalBody>{buildUsersList(following)}</ModalBody>
         </Modal>

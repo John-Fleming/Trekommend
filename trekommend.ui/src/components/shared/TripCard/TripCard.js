@@ -23,7 +23,7 @@ class TripCard extends React.Component {
           <h4 className="base-card-details-title">
             <span className="mr-2">{trip.name}</span>
             <span>|</span>
-            <span className="ml-2">{trip.isPlanned ? 'Planned' : `${format(parseJSON(trip.startDate), 'MMMM yyyy')}`}</span>
+            <span className="ml-2">{trip.isPlanned ? 'Planned' : `${format(parseJSON(trip.endDate), 'MMMM yyyy')}`}</span>
           </h4>
           <span className="base-card-details-subtitle">{trip.location}</span>
           <span className="base-card-details-username subtle-text">{user.firstName} {user.lastName}</span>

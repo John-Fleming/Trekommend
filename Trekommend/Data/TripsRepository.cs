@@ -37,5 +37,33 @@ namespace Trekommend.Data
 
             return singleTrip;
         }
+
+        public int AddTrip(Trip newTrip)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sql = $@"INSERT INTO [dbo].[Trips]
+                               ([UserId]
+                               ,[Name]
+                               ,[Location]
+                               ,[StartDate]
+                               ,[EndDate]
+                               ,[CoverPhoto]
+                               ,[IsPlanned])
+                        Output inserted.TripId
+                         VALUES
+                               (@userId
+                               ,@name
+                               ,@location
+                               ,@startDate
+                               ,@endDate
+                               ,@coverPhoto
+                               ,@isPlanned)";
+
+            var newId = db.ExecuteScalar<int>(sql, newTrip);
+
+            newTrip.TripId = newId;
+            return newId;
+        }
     }
 }
