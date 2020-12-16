@@ -12,6 +12,7 @@ class Trips extends React.Component {
     user: {},
     trips: [],
     tripFormModal: false,
+    editingTrip: false,
   }
 
   getUser = () => {
@@ -34,13 +35,16 @@ class Trips extends React.Component {
   }
 
   createOrEditTrip = () => {
-    // to do - this click event will launch a modal with a form to add a new trip
-    console.error('test');
     this.setState({ tripFormModal: !this.state.tripFormModal });
   }
 
   render() {
-    const { user, trips, tripFormModal } = this.state;
+    const {
+      user,
+      trips,
+      tripFormModal,
+      editingTrip,
+    } = this.state;
 
     const buildTripCards = trips.map((trip, index) => <TripCard key={index} trip={trip} user={user}/>);
 
@@ -49,12 +53,17 @@ class Trips extends React.Component {
         <span className="Trips-header">
           {user.firstName} {user.lastName}'s Trips [{trips.length}]
         </span>
+        {/* to do: only render the below button if the user in state equals the authed user */}
         <button className="btn" onClick={this.createOrEditTrip}><i className="fas fa-plus"></i></button>
         <div className="Trips-container">
           {buildTripCards}
         </div>
 
-        <AddOrEditTripForm tripFormModal={tripFormModal} createOrEditTrip={this.createOrEditTrip}></AddOrEditTripForm>
+        <AddOrEditTripForm
+          tripFormModal={tripFormModal}
+          editingTrip={editingTrip}
+          createOrEditTrip={this.createOrEditTrip}>
+        </AddOrEditTripForm>
       </div>
     );
   }
