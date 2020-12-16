@@ -15,26 +15,29 @@ class Trips extends React.Component {
     editingTrip: false,
   }
 
-  getUser = () => {
-    const { userId } = this.props.match.params;
+  getUser = (userId) => {
     UserData.getUserByUserId(userId)
       .then((resp) => this.setState({ user: resp }))
       .catch((err) => console.error('could not get user object', err));
   }
 
-  getUsersTrips = () => {
-    const { userId } = this.props.match.params;
+  getUsersTrips = (userId) => {
     TripData.getTripsByUserId(userId)
       .then((resp) => this.setState({ trips: resp }))
       .catch((err) => console.error('could not get user trips', err));
   }
 
-  componentDidMount() {
-    this.getUser();
-    this.getUsersTrips();
+  getUserTripData = () => {
+    const { userId } = this.props.match.params;
+    this.getUser(userId);
+    this.getUsersTrips(userId);
   }
 
-  createOrEditTrip = () => {
+  componentDidMount() {
+    this.getUserTripData();
+  }
+
+  toggleTripFormModal = () => {
     this.setState({ tripFormModal: !this.state.tripFormModal });
   }
 
@@ -54,7 +57,7 @@ class Trips extends React.Component {
           {user.firstName} {user.lastName}'s Trips [{trips.length}]
         </span>
         {/* to do: only render the below button if the user in state equals the authed user */}
-        <button className="btn" onClick={this.createOrEditTrip}><i className="fas fa-plus"></i></button>
+        <button className="btn" onClick={this.toggleTripFormModal}><i className="fas fa-plus"></i></button>
         <div className="Trips-container">
           {buildTripCards}
         </div>
@@ -62,7 +65,8 @@ class Trips extends React.Component {
         <AddOrEditTripForm
           tripFormModal={tripFormModal}
           editingTrip={editingTrip}
-          createOrEditTrip={this.createOrEditTrip}>
+          getUserTripData={this.getUserTripData}
+          toggleTripFormModal={this.toggleTripFormModal}>
         </AddOrEditTripForm>
       </div>
     );

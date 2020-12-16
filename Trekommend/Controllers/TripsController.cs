@@ -33,5 +33,13 @@ namespace Trekommend.Controllers
             var singleTrip = _repo.GetTrip(tripId);
             return Ok(singleTrip);
         }
+
+        [HttpPost]
+        public IActionResult AddNewTrip(Trip newTrip)
+        {
+            _repo.AddTrip(newTrip);
+
+            return Created($"/api/trips/{newTrip.TripId}", newTrip);
+        }
     }
 }
