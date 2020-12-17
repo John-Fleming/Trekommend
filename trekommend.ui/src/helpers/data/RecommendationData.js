@@ -13,4 +13,10 @@ const getSingleRecommendation = (recId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getRecommendationsByTripId, getSingleRecommendation}; // eslint-disable-line
+const addNewRec = (newRec) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/recommendations`, newRec)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
+export default {getRecommendationsByTripId, getSingleRecommendation, addNewRec}; // eslint-disable-line

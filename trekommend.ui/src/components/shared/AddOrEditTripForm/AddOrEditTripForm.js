@@ -64,8 +64,6 @@ class AddOrEditTripForm extends React.Component {
       isPlanned,
     };
 
-    console.error(newTrip);
-
     TripData.addNewTrip(newTrip)
       .then(() => getUserTripData())
       .catch((err) => console.error('could not submit new trip', err));

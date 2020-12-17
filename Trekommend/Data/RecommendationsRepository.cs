@@ -50,5 +50,35 @@ namespace Trekommend.Data
 
             return singleRec;
         }
+
+        public int AddRec(Recommendation newRec)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sql = $@"INSERT INTO [dbo].[Recommendations]
+                               ([UserId]
+                               ,[TripId]
+                               ,[RecCategoryId]
+                               ,[Title]
+                               ,[Rating]
+                               ,[Review]
+                               ,[Description]
+                               ,[TimesSaved])
+                         Output inserted.RecId
+                         VALUES
+                               (@userId
+                               ,@tripId
+                               ,@recCategoryId
+                               ,@title
+                               ,@rating
+                               ,@review
+                               ,@description
+                               ,@timesSaved)";
+
+            var newId = db.ExecuteScalar<int>(sql, newRec);
+
+            newRec.RecId= newId;
+            return newId;
+        }
     }
 }
