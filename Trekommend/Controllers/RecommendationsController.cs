@@ -67,7 +67,7 @@ namespace Trekommend.Controllers
         [HttpPost]
         public IActionResult AddNewRec(Recommendation newRec)
         {
-            _repo.AddRec(newRec);
+            var recId = _repo.AddRec(newRec);
 
             return Created($"/api/recommendations/{newRec.RecId}", newRec);
         }
