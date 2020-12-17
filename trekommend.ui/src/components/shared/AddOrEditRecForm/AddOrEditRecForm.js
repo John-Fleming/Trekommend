@@ -10,9 +10,9 @@ class AddOrEditRecForm extends React.Component {
   state = {
     recCategoryId: '',
     title: '',
-    rating: '',
-    review: '',
-    description: '',
+    rating: null,
+    review: null,
+    description: null,
     photoUrl: null,
     recCategories: [],
   }
@@ -65,8 +65,7 @@ class AddOrEditRecForm extends React.Component {
       .catch((err) => console.error('could not add rec photo', err));
   }
 
-  submitRec = (e) => {
-    e.preventDefault();
+  submitRec = () => {
     const { intializeSingleTripPageData, tripId } = this.props;
     const { title, recCategoryId, rating, review, description, photoUrl } = this.state; // eslint-disable-line
     const newRec = {
