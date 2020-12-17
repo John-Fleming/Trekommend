@@ -6,48 +6,58 @@ import RecommendationCard from '../../shared/RecommendationCard/RecommendationCa
 import TripData from '../../../helpers/data/TripData';
 import RecommendationData from '../../../helpers/data/RecommendationData';
 import UserData from '../../../helpers/data/UserData';
+import AddOrEditRecForm from '../../shared/AddOrEditRecForm/AddOrEditRecForm';
 
 class SingleTrip extends React.Component {
   state = {
     trip: {},
     recommendations: [],
     user: {},
+    recFormModal: false,
+    editingRec: false,
   }
 
-  getTrip = () => {
-    const { tripId } = this.props.match.params;
+  getTrip = (tripId) => {
     TripData.getSingleTrip(tripId)
       .then((resp) => this.setState({ trip: resp }))
       .catch((err) => console.error('could not get trip', err));
   }
 
-  getRecommendations = () => {
-    const { tripId } = this.props.match.params;
+  getRecommendations = (tripId) => {
     RecommendationData.getRecommendationsByTripId(tripId)
       .then((resp) => this.setState({ recommendations: resp }))
       .catch((err) => console.error('could not get recommendations', err));
   }
 
-  getUser = () => {
-    const { userId } = this.props.match.params;
+  getUser = (userId) => {
     UserData.getUserByUserId(userId)
       .then((resp) => this.setState({ user: resp }))
       .catch((err) => console.error('could not get user object', err));
   }
 
-  componentDidMount() {
-    this.getTrip();
-    this.getRecommendations();
-    this.getUser();
+  intializeSingleTripPageData = () => {
+    const { tripId, userId } = this.props.match.params;
+    this.getTrip(tripId);
+    this.getRecommendations(tripId);
+    this.getUser(userId);
   }
 
-  createNewRec = () => {
-    // to do - this click event will launch a modal with a form to add a new rec
-    console.error('add a new rec');
+  componentDidMount() {
+    this.intializeSingleTripPageData();
+  }
+
+  toggleRecFormModal = () => {
+    this.setState({ recFormModal: !this.state.recFormModal });
   }
 
   render() {
-    const { trip, recommendations, user } = this.state;
+    const {
+      trip,
+      recommendations,
+      user,
+      recFormModal,
+      editingRec,
+    } = this.state;
 
     const buildRecommendationCards = recommendations.map((rec, index) => <RecommendationCard key={index} rec={rec} user={user}/>);
 
@@ -61,11 +71,20 @@ class SingleTrip extends React.Component {
         <span className="SingleTrip-header">
           {user.firstName} {user.lastName}'s Recommendations [{recommendations.length}]
         </span>
-        <button className="btn" onClick={this.createNewRec}><i className="fas fa-plus"></i></button>
+        {/* to do: only render the below button if the user in state equals the authed user */}
+        <button className="btn" onClick={this.toggleRecFormModal}><i className="fas fa-plus"></i></button>
 
         <div className="SingleTrip-recommendations-container">
           {buildRecommendationCards}
         </div>
+
+        <AddOrEditRecForm
+          recFormModal={recFormModal}
+          editingRec={editingRec}
+          intializeSingleTripPageData={this.intializeSingleTripPageData}
+          toggleRecFormModal={this.toggleRecFormModal}
+          tripId={trip.tripId}>
+        </AddOrEditRecForm>
       </div>
     );
   }
