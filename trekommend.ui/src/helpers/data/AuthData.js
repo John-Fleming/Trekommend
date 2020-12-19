@@ -18,8 +18,7 @@ const checkForExistingUser = (user) => new Promise((resolve, reject) => {
   const existingUser = {};
   axios.get(`${baseUrl}/users/fb/${user.firebaseUid}`)
     .then((resp) => {
-      // check to make sure the resp.data adds the right uid
-      existingUser.firebaseUid = resp.data.firebaseUid;
+      existingUser.firebaseUid = resp.data.uuid;
       resolve(existingUser);
     })
     .catch((err) => {
@@ -44,8 +43,7 @@ const loginUser = () => {
   return firebase.auth().signInWithPopup(provider).then((cred) => {
     // get token from firebase
     const userInfo = { firebaseUid: cred.user.uid, profile: cred.additionalUserInfo.profile };
-    console.error('user', userInfo);
-    console.error('cred', cred);
+
     cred.user.getIdToken()
       // save the token to the session storage
       .then((token) => sessionStorage.setItem('token', token))
@@ -57,9 +55,16 @@ const logoutUser = () => firebase.auth().signOut();
 
 const getUid = () => firebase.auth().currentUser.uid;
 
+const getUserByUuid = (uuid) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/users/fb/${uuid}`)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getUid,
   loginUser,
   logoutUser,
+  getUserByUuid,
 };

@@ -37,7 +37,7 @@ namespace Trekommend.Controllers
         }
         
         [HttpGet("fb/{firebaseUid}")]
-        public IActionResult GetUserByUuid(int firebaseUid)
+        public IActionResult GetUserByUuid(string firebaseUid)
         {
             var singleUser = _repo.GetByUuid(firebaseUid);
             if (singleUser == null) return NotFound("No user with that ID was found");

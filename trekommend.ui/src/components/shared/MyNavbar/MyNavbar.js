@@ -12,7 +12,7 @@ import './MyNavbar.scss';
 
 class MyNavbar extends React.Component {
   render() {
-    const { authed } = this.props;
+    const { authed, authedUser } = this.props;
 
     if (authed) {
       return (
@@ -24,10 +24,10 @@ class MyNavbar extends React.Component {
                     <NavLink tag={RRNavLink} to="/profile"><i className="fas fa-search text-dark"></i></NavLink>
                   </NavItem>
                   <NavItem className="mx-2">
-                    <NavLink tag={RRNavLink} to="/trips/1"><i className="fas fa-plane text-dark"></i></NavLink>
+                    <NavLink tag={RRNavLink} to={`/trips/${authedUser.userId}`}><i className="fas fa-plane text-dark"></i></NavLink>
                   </NavItem>
                   <NavItem className="ml-2">
-                    <NavLink tag={RRNavLink} to="/profile/1"><i className="far fa-user text-dark"></i></NavLink>
+                    <NavLink tag={RRNavLink} to={`/profile/${authedUser.userId}`}><i className="far fa-user text-dark"></i></NavLink>
                   </NavItem>
                 </Nav>
             </Navbar>

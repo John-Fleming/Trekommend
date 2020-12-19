@@ -41,7 +41,7 @@ namespace Trekommend.Data
             return singleUser;
         }
         
-        public User GetByUuid(int firebaseUid)
+        public User GetByUuid(string firebaseUid)
         {
             using var db = new SqlConnection(_connectionString);
 

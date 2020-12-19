@@ -18,6 +18,7 @@ import SingleRecommendation from '../components/pages/SingleRecommendation/Singl
 import Login from '../components/pages/Login/Login';
 
 import fbConnection from '../helpers/data/connection';
+import AuthData from '../helpers/data/AuthData';
 
 fbConnection();
 
@@ -38,14 +39,22 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 class App extends React.Component {
   state = {
     authed: false,
+    authedUser: {},
+  }
+
+  getAuthedUser = (uuid) => {
+    AuthData.getUserByUuid(uuid)
+      .then((resp) => this.setState({ authedUser: resp }))
+      .catch((err) => console.error('there was a problem getting the authed user', err));
   }
 
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.getAuthedUser(user.uid);
         this.setState({ authed: true });
       } else {
-        this.setState({ authed: false });
+        this.setState({ authed: false, authedUser: {} });
       }
     });
   }
@@ -55,21 +64,21 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed } = this.state;
+    const { authed, authedUser } = this.state;
 
     return (
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar authed={authed}></MyNavbar>
+            <MyNavbar authed={authed} authedUser={authedUser}></MyNavbar>
               <Switch>
-                <PrivateRoute path='/user/:userId/trip/:tripId' component={SingleTrip} authed={authed}/>
-                <PrivateRoute path='/user/:userId/recommendation/:recommendationId' component={SingleRecommendation} authed={authed}/>
-                <PrivateRoute path='/trips/:userId' component={Trips} authed={authed}/>
-                <PrivateRoute path='/profile/:userId' component={UserProfile} authed={authed}/>
-                {/* <PrivateRoute path='/discover' component={SearchResults} authed={authed}/> */}
-                {/* <PrivateRoute path='/' component={Home} authed={authed} /> */}
-                <PublicRoute path='/login' component={Login} authed={authed}/>
+                <PrivateRoute path='/user/:userId/trip/:tripId' component={SingleTrip} authed={authed} authedUser={authedUser}/>
+                <PrivateRoute path='/user/:userId/recommendation/:recommendationId' component={SingleRecommendation} authed={authed} authedUser={authedUser}/>
+                <PrivateRoute path='/trips/:userId' component={Trips} authed={authed} authedUser={authedUser}/>
+                <PrivateRoute path='/profile/:userId' component={UserProfile} authed={authed} authedUser={authedUser}/>
+                {/* <PrivateRoute path='/discover' component={SearchResults} authed={authed} authedUser={authedUser}/> */}
+                {/* <PrivateRoute path='/' component={Home} authed={authed} authedUser={authedUser} /> */}
+                <PublicRoute path='/login' component={Login} authed={authed} />
                 <Redirect from="*" to="/" />
               </Switch>
           </React.Fragment>
