@@ -40,6 +40,47 @@ namespace Trekommend.Data
             var singleUser = db.QueryFirstOrDefault<User>(sql, parameters);
             return singleUser;
         }
+        
+        public User GetByUuid(int firebaseUid)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sql = @"select * from users
+                        where Uuid = @uuid";
+
+            var parameters = new { uuid = firebaseUid };
+
+            var singleUser = db.QueryFirstOrDefault<User>(sql, parameters);
+            return singleUser;
+        }
+
+        public int AddUser(User newUser)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sql = $@"INSERT INTO [dbo].[Users]
+                               ([Uuid]
+                               ,[FirstName]
+                               ,[LastName]
+                               ,[Email]
+                               ,[Phone]
+                               ,[DateJoined]
+                               ,[UserPhoto])
+                         VALUES
+                               (@uuid
+                               ,@firstName
+                               ,@lastName
+                               ,@email
+                               ,@phone
+                               ,getdate()
+                               ,@userPhoto)";
+
+            var newId = db.ExecuteScalar<int>(sql, newUser);
+
+            newUser.UserId = newId;
+            return newId;
+        }
+
     }
 
 }

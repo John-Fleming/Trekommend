@@ -9,6 +9,7 @@ import './UserProfile.scss';
 import UserData from '../../../helpers/data/UserData';
 import TripData from '../../../helpers/data/TripData';
 import RelationshipsData from '../../../helpers/data/RelationshipsData';
+import AuthData from '../../../helpers/data/AuthData';
 
 class UserProfile extends React.Component {
   state = {
@@ -68,6 +69,13 @@ class UserProfile extends React.Component {
     this.setState({ followersModal: false, followingModal: false });
   }
 
+  handleLogout = (e) => {
+    e.preventDefault();
+    AuthData.logoutUser()
+      .then(() => this.props.history.push('/login'))
+      .catch((err) => console.error('there was a problem logging out', err));
+  }
+
   componentDidUpdate(prevProps) {
     const { userId } = this.props.match.params;
     const prevUserId = prevProps.match.params.userId;
@@ -98,6 +106,7 @@ class UserProfile extends React.Component {
         <div className="user-container col">
           <h2>{user.firstName} {user.lastName}</h2>
           <p className="subtle-text">Member since {getYear(parseJSON(user.dateJoined))}</p>
+          <button className="btn" onClick={this.handleLogout}>Logout</button>
         </div>
         <div className="user-stats-container col">
           <h4>
