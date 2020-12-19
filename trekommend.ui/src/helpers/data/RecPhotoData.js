@@ -7,4 +7,10 @@ const getPhotosByRecId = (recId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getPhotosByRecId}; // eslint-disable-line
+const addRecPhoto = (newPhoto) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/rec-photos`, newPhoto)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
+export default {getPhotosByRecId, addRecPhoto}; // eslint-disable-line

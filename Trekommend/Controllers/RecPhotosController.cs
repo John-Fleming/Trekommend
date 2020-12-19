@@ -26,5 +26,13 @@ namespace Trekommend.Controllers
             var recPhotos = _repo.GetRecPhotos(recId);
             return Ok(recPhotos);
         }
+
+        [HttpPost]
+        public IActionResult AddRecPhoto(RecommendationPhoto newPhoto)
+        {
+            _repo.AddPhoto(newPhoto);
+
+            return Created($"api/rec-photos/{newPhoto.PhotoId}", newPhoto);
+        }
     }
 }

@@ -20,9 +20,9 @@ class MyNavbar extends React.Component {
                 <NavItem className="mr-2">
                   <NavLink tag={RRNavLink} to="/profile"><i className="fas fa-search text-dark"></i></NavLink>
                 </NavItem>
-                {/* <NavItem className="mx-2">
-                  <NavLink tag={RRNavLink} to="/profile"><i className="fas fa-plus text-dark"></i></NavLink>
-                </NavItem> */}
+                <NavItem className="mx-2">
+                  <NavLink tag={RRNavLink} to="/trips/1"><i className="fas fa-plane text-dark"></i></NavLink>
+                </NavItem>
                 <NavItem className="ml-2">
                   <NavLink tag={RRNavLink} to="/profile/1"><i className="far fa-user text-dark"></i></NavLink>
                 </NavItem>

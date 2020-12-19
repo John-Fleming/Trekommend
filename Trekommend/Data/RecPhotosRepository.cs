@@ -28,5 +28,23 @@ namespace Trekommend.Data
 
             return recPhotos.ToList();
         }
+
+        public int AddPhoto(RecommendationPhoto newPhoto)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sql = $@"INSERT INTO [dbo].[Recommendation_Photos]
+                               ([RecId]
+                               ,[PhotoUrl])
+                        Output inserted.PhotoId
+                         VALUES
+                               (@recId
+                               ,@photoUrl)";
+
+            var newId = db.ExecuteScalar<int>(sql, newPhoto);
+
+            newPhoto.PhotoId = newId;
+            return newId;
+        }
     }
 }
