@@ -15,9 +15,9 @@ namespace Trekommend.Controllers
     {
         RelationshipsRepository _repo;
 
-        public RelationshipsController()
+        public RelationshipsController(RelationshipsRepository repo)
         {
-            _repo = new RelationshipsRepository();
+            _repo = repo;
         }
 
         [HttpGet("{userId}/followers")]

@@ -1,0 +1,17 @@
+.Login {
+  max-height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 10%;
+
+  &-app-title {
+    text-transform: uppercase;
+    font-weight: 200;
+    letter-spacing: 4px;
+  }
+  
+  &-btn {
+    margin-top: 4rem;
+  }
+}

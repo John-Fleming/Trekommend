@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Trekommend.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Trekommend
 {
@@ -26,6 +29,28 @@ namespace Trekommend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddTransient<RecCategoriesRepository>();
+            services.AddTransient<RecommendationsRepository>();
+            services.AddTransient<RecPhotosRepository>();
+            services.AddTransient<RelationshipsRepository>();
+            services.AddTransient<TripsRepository>();
+            services.AddTransient<UsersRepository>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.IncludeErrorDetails = true;
+                    options.Authority = "https://securetoken.google.com/trekommend-160b4";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateLifetime = true,
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidAudience = "trekommend-160b4",
+                        ValidIssuer = "https://securetoken.google.com/trekommend-160b4"
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

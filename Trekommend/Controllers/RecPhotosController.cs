@@ -15,9 +15,9 @@ namespace Trekommend.Controllers
     {
         RecPhotosRepository _repo;
 
-        public RecPhotosController()
+        public RecPhotosController(RecPhotosRepository repo)
         {
-            _repo = new RecPhotosRepository();
+            _repo = repo;
         }
 
         [HttpGet("{recId}")]
