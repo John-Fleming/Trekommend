@@ -9,8 +9,8 @@ class AddOrEditTripForm extends React.Component {
     userId: 1, // to do: update this to be authed user
     name: '',
     location: '',
-    startDate: '',
-    endDate: '',
+    startDate: null,
+    endDate: null,
     coverPhoto: '',
     isPlanned: false,
   }
@@ -51,15 +51,23 @@ class AddOrEditTripForm extends React.Component {
     toggleTripFormModal();
   }
 
+  convertToDate = (submittedDate) => {
+    if (submittedDate === null) {
+      return submittedDate;
+    }
+    return new Date(submittedDate);
+  }
+
   submitTrip = () => {
     const { getUserTripData } = this.props;
     const { userId, name, location, startDate, endDate, coverPhoto, isPlanned } = this.state; // eslint-disable-line
+
     const newTrip = {
       userId,
       name,
       location,
-      startDate: new Date(startDate),
-      endDate: new Date(endDate),
+      startDate: this.convertToDate(startDate),
+      endDate: this.convertToDate(endDate),
       coverPhoto,
       isPlanned,
     };
