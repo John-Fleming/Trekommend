@@ -5,12 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using Trekommend.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Trekommend.Data
 {
     public class RecommendationsRepository
     {
-        const string _connectionString = "Server = localhost; Database = Trekommend; Trusted_Connection = True;";
+        readonly string _connectionString;
+
+        public RecommendationsRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("Trekommend");
+        }
 
         public IEnumerable<Recommendation> GetUsersRecommendations(int userId)
         {

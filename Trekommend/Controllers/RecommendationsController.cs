@@ -16,10 +16,10 @@ namespace Trekommend.Controllers
         RecommendationsRepository _repo;
         RecPhotosRepository _photosRepo;
 
-        public RecommendationsController()
+        public RecommendationsController(RecommendationsRepository repo, RecPhotosRepository photosrepo)
         {
-            _repo = new RecommendationsRepository();
-            _photosRepo = new RecPhotosRepository();
+            _repo = repo;
+            _photosRepo = photosrepo;
         }
 
         [HttpGet("{userId}")]

@@ -15,9 +15,9 @@ namespace Trekommend.Controllers
     {
         TripsRepository _repo;
 
-        public TripsController()
+        public TripsController(TripsRepository repo)
         {
-            _repo = new TripsRepository();
+            _repo = repo;
         }
 
         [HttpGet("{userId}")]

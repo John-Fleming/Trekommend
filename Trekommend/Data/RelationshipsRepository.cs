@@ -5,12 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using Trekommend.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Trekommend.Data
 {
     public class RelationshipsRepository
     {
-        const string _connectionString = "Server = localhost; Database = Trekommend; Trusted_Connection = True;";
+        readonly string _connectionString;
+
+        public RelationshipsRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("Trekommend");
+        }
 
         public IEnumerable<User> GetUserFollowers(int userId)
         {

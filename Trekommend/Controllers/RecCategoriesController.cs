@@ -15,9 +15,9 @@ namespace Trekommend.Controllers
     {
         RecCategoriesRepository _repo;
 
-        public RecCategoriesController()
+        public RecCategoriesController(RecCategoriesRepository repo)
         {
-            _repo = new RecCategoriesRepository();
+            _repo = repo;
         }
 
         [HttpGet()]

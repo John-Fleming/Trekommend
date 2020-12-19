@@ -14,9 +14,9 @@ namespace Trekommend.Controllers
     {
         UsersRepository _repo;
 
-        public UsersController()
+        public UsersController(UsersRepository repo)
         {
-            _repo = new UsersRepository();
+            _repo = repo;
         }
 
         [HttpGet]
