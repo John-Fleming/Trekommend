@@ -13,6 +13,7 @@ import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
 import Trips from '../components/pages/Trips/Trips';
 import SingleTrip from '../components/pages/SingleTrip/SingleTrip';
 import SingleRecommendation from '../components/pages/SingleRecommendation/SingleRecommendation';
+import Login from '../components/pages/Login/Login';
 
 class App extends React.Component {
   render() {
@@ -27,7 +28,7 @@ class App extends React.Component {
                 <Route path='/trips/:userId' component={Trips}/>
                 <Route path='/profile/:userId' component={UserProfile}/>
                 {/* <Route path='/discover' component={SearchResults}/> */}
-                {/* <Route path='/login' component={Login}/> */}
+                <Route path='/login' component={Login}/>
                 {/* <Route path='/' component={Home} /> */}
                 <Redirect from="*" to="/" />
               </Switch>
