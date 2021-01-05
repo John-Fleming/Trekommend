@@ -5,6 +5,7 @@ import RecommendationData from '../../../helpers/data/RecommendationData';
 import UserData from '../../../helpers/data/UserData';
 import RecPhotoData from '../../../helpers/data/RecPhotoData';
 import RecCategoryData from '../../../helpers/data/RecCategoryData';
+import AuthData from '../../../helpers/data/AuthData';
 
 class SingleRecommendation extends React.Component {
   state = {
@@ -12,6 +13,7 @@ class SingleRecommendation extends React.Component {
     recPhotos: [],
     recCategory: '',
     user: {},
+    isAuthedUser: false,
   }
 
   getRec = () => {
@@ -36,7 +38,12 @@ class SingleRecommendation extends React.Component {
   getUser = () => {
     const { userId } = this.props.match.params;
     UserData.getUserByUserId(userId)
-      .then((resp) => this.setState({ user: resp }))
+      .then((resp) => {
+        this.setState({ user: resp });
+        const authedUserUid = AuthData.getUid();
+
+        if (resp.uuid === authedUserUid) this.setState({ isAuthedUser: true });
+      })
       .catch((err) => console.error('could not get user object', err));
   }
 
@@ -59,6 +66,7 @@ class SingleRecommendation extends React.Component {
       recPhotos,
       recCategory,
       user,
+      isAuthedUser,
     } = this.state;
     // to-do: create a gallery or slideshow shared component for rec photos
 
@@ -75,12 +83,18 @@ class SingleRecommendation extends React.Component {
           <div className="rec-summary-details-container col-8">
             <h2>{rec.title}</h2>
             <p>Recommendation By: {user.firstName} {user.lastName}</p>
+
             { rec.rating !== null
               ? <p>Rating: {rec.rating}/5</p>
               : ''
-           }
+            }
             <p>Category: {recCategory}</p>
-            <button className="btn btn-outline-dark" onClick={this.addToPlannedTrip} >Save</button>
+
+            { isAuthedUser
+              ? ''
+              : <button className="btn btn-outline-dark" onClick={this.addToPlannedTrip} >Save</button>
+            }
+
             <p className="subtle-text">Times Saved: {rec.timesSaved}</p>
           </div>
 

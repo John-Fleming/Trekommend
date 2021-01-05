@@ -18,7 +18,6 @@ class TripCard extends React.Component {
     return (
       <div className="TripCard base-card col-md-4">
           <Link to={`/user/${user.userId}/trip/${trip.tripId}`} className="custom-link">
-            {/* <img className="card-img-top base-card-cover-photo" src={trip.coverPhoto} alt={`${trip.name} card cover`}/> */}
             { trip.coverPhoto.length > 0
               ? <img className="card-img-top base-card-cover-photo" src={trip.coverPhoto} alt={`${trip.name} card cover`}/>
               : <img className="card-img-top base-card-cover-photo" src="https://i.imgur.com/b2AvRuB.jpg" alt={`${trip.name} card cover`}/>

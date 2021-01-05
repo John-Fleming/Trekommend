@@ -7,7 +7,6 @@ const UserShape = PropTypes.shape({
   lastName: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
   dateJoined: PropTypes.string.isRequired,
   userPhoto: PropTypes.string.isRequired,
 });
