@@ -2,11 +2,12 @@ import React from 'react';
 import './SingleTrip.scss';
 
 import RecommendationCard from '../../shared/RecommendationCard/RecommendationCard';
+import AddOrEditRecForm from '../../shared/AddOrEditRecForm/AddOrEditRecForm';
 
 import TripData from '../../../helpers/data/TripData';
 import RecommendationData from '../../../helpers/data/RecommendationData';
 import UserData from '../../../helpers/data/UserData';
-import AddOrEditRecForm from '../../shared/AddOrEditRecForm/AddOrEditRecForm';
+import AuthData from '../../../helpers/data/AuthData';
 
 class SingleTrip extends React.Component {
   state = {
@@ -15,6 +16,7 @@ class SingleTrip extends React.Component {
     user: {},
     recFormModal: false,
     editingRec: false,
+    isAuthedUser: false,
   }
 
   getTrip = (tripId) => {
@@ -31,7 +33,12 @@ class SingleTrip extends React.Component {
 
   getUser = (userId) => {
     UserData.getUserByUserId(userId)
-      .then((resp) => this.setState({ user: resp }))
+      .then((resp) => {
+        this.setState({ user: resp });
+        const authedUserUid = AuthData.getUid();
+
+        if (resp.uuid === authedUserUid) this.setState({ isAuthedUser: true });
+      })
       .catch((err) => console.error('could not get user object', err));
   }
 
@@ -57,6 +64,7 @@ class SingleTrip extends React.Component {
       user,
       recFormModal,
       editingRec,
+      isAuthedUser,
     } = this.state;
 
     const buildRecommendationCards = recommendations.map((rec, index) => <RecommendationCard key={index} rec={rec} user={user}/>);
@@ -71,8 +79,11 @@ class SingleTrip extends React.Component {
         <span className="SingleTrip-header">
           {user.firstName} {user.lastName}'s Recommendations [{recommendations.length}]
         </span>
-        {/* to do: only render the below button if the user in state equals the authed user */}
-        <button className="btn" onClick={this.toggleRecFormModal}><i className="fas fa-plus"></i></button>
+
+        { isAuthedUser
+          ? <button className="btn" onClick={this.toggleRecFormModal}><i className="fas fa-plus"></i></button>
+          : ''
+        }
 
         <div className="SingleTrip-recommendations-container">
           {buildRecommendationCards}
