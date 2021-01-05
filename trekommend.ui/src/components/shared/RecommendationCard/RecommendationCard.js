@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Rating } from '@material-ui/lab';
 import './RecommendationCard.scss';
 
 import RecShape from '../../../helpers/propz/RecShape';
@@ -23,7 +24,7 @@ class RecomendationCard extends React.Component {
         <div className="base-card-details">
           <h4 className="base-card-details-title">{rec.title}</h4>
           { rec.rating !== null
-            ? <span className="base-card-details-subtitle">Rating: {rec.rating}/5</span>
+            ? <Rating name="read-only" value={rec.rating} size="small" readOnly />
             : ''
           }
           <span className="base-card-details-username subtle-text">{user.firstName} {user.lastName}</span>

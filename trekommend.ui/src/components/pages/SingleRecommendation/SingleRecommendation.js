@@ -1,4 +1,5 @@
 import React from 'react';
+import { Rating } from '@material-ui/lab';
 import './SingleRecommendation.scss';
 
 import RecommendationData from '../../../helpers/data/RecommendationData';
@@ -12,6 +13,7 @@ class SingleRecommendation extends React.Component {
     rec: {},
     recPhotos: [],
     recCategory: '',
+    ratingValue: '',
     user: {},
     isAuthedUser: false,
   }
@@ -20,7 +22,7 @@ class SingleRecommendation extends React.Component {
     const { recommendationId } = this.props.match.params;
     RecommendationData.getSingleRecommendation(recommendationId)
       .then((resp) => {
-        this.setState({ rec: resp });
+        this.setState({ rec: resp, ratingValue: Number(resp.rating) });
         RecCategoryData.getSingleRecCategory(resp.recCategoryId)
           .then((r) => this.setState({ recCategory: r }))
           .catch((err) => console.error('could not get rec categories', err));
@@ -63,6 +65,7 @@ class SingleRecommendation extends React.Component {
       rec,
       recPhotos,
       recCategory,
+      ratingValue,
       user,
       isAuthedUser,
     } = this.state;
@@ -82,7 +85,7 @@ class SingleRecommendation extends React.Component {
             <p className="rec-summary-overview-container-rating">
               {recCategory}
               { rec.rating !== null
-                ? <span><span className="mx-2">|</span><span>{rec.rating}/5</span></span>
+                ? <span><span className="mx-2">|</span><Rating name="read-only" value={ratingValue} size="small" readOnly /></span>
                 : ''
               }
             </p>
