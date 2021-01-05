@@ -47,8 +47,6 @@ class SingleRecommendation extends React.Component {
       .catch((err) => console.error('could not get user object', err));
   }
 
-  // to do: add get rec category
-
   componentDidMount() {
     this.getRec();
     this.getRecPhotos();
@@ -73,34 +71,40 @@ class SingleRecommendation extends React.Component {
     return (
       <div className="SingleRecommendation">
         <div className="rec-summary row">
-          <div className="rec-summary-cover-photo-container col-4">
+          <div className="rec-summary-overview-container col-md-4">
+            <h2 className="rec-summary-overview-container-title">{rec.title}</h2>
+
             { recPhotos.length > 0
               ? <img className="" src={recPhotos[0].photoUrl} alt={`${rec.title} card cover`}/>
               : <img className="" src="https://i.imgur.com/b2AvRuB.jpg" alt={`${rec.title} card cover`}/>
             }
+
+            <p className="rec-summary-overview-container-rating">
+              {recCategory}
+              { rec.rating !== null
+                ? <span><span className="mx-2">|</span><span>{rec.rating}/5</span></span>
+                : ''
+              }
+            </p>
+
           </div>
 
-          <div className="rec-summary-details-container col-8">
-            <h2>{rec.title}</h2>
-            <p>Recommendation By: {user.firstName} {user.lastName}</p>
+          <div className="rec-summary-review-container col-md-8">
+            <span className="rec-summary-review-container-subtitle">Reccomended By:</span>
+            <p>{user.firstName} {user.lastName}</p>
 
-            { rec.rating !== null
-              ? <p>Rating: {rec.rating}/5</p>
-              : ''
-            }
-            <p>Category: {recCategory}</p>
+            <span className="rec-summary-review-container-subtitle">Description:</span>
+            <p>{rec.description}</p>
+
+            <span className="rec-summary-review-container-subtitle">Review:</span>
+            <p>{rec.review}</p>
 
             { isAuthedUser
               ? ''
-              : <button className="btn btn-outline-dark" onClick={this.addToPlannedTrip} >Save</button>
+              : <button className="btn btn-outline-dark save-rec-btn" onClick={this.addToPlannedTrip} >Save</button>
             }
 
             <p className="subtle-text">Times Saved: {rec.timesSaved}</p>
-          </div>
-
-          <div className="rec-review-container container">
-            <p>Description: {rec.description}</p>
-            <p>Review: {rec.review}</p>
           </div>
         </div>
       </div>

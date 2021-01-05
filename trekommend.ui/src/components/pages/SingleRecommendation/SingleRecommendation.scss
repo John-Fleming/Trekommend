@@ -1,10 +1,39 @@
 .rec-summary {
   padding: 2% 10% 0;
 
-  &-cover-photo-container {
+  &-overview-container {
+    &-title {
+      font-family: 'Crimson-Text';
+      font-size: 1.5rem;
+      letter-spacing: 1.5px;
+      padding-bottom: .5rem;
+      border-bottom: 1.25px solid black;
+      margin-bottom: 1rem;
+    }
+
     img {
       width: 100%;
       height: 350px;
-    }  
+    }
+
+    &-rating {
+      margin-top: 1rem;
+    }
+  }
+
+  &-review-container {
+    padding-top: 3rem;
+
+    &-subtitle {
+      font-family: 'Crimson-Text';
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #aaa;
+      margin-bottom: .2rem;
+    }
+    
+    p {
+      margin-top: .4rem;
+    }
   }
 }
