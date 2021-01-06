@@ -18,6 +18,7 @@ class SingleRecommendation extends React.Component {
     recCategory: '',
     ratingValue: '',
     user: {},
+    authedUser: {},
     authedUserPlannedTrips: [],
     isAuthedUser: false,
     saveUserRecModal: false,
@@ -58,6 +59,7 @@ class SingleRecommendation extends React.Component {
     const authedUuid = AuthData.getUid();
     AuthData.getUserByUuid(authedUuid)
       .then((resp) => {
+        this.setState({ authedUser: resp });
         TripData.getUsersPlannedTrips(resp.userId)
           .then((r) => this.setState({ authedUserPlannedTrips: r }));
       })
@@ -75,6 +77,11 @@ class SingleRecommendation extends React.Component {
     this.setState({ saveUserRecModal: !this.state.saveUserRecModal });
   }
 
+  routeToSelectedTrip = (userId, tripId) => {
+    this.toggleSaveUserRecModal();
+    this.props.history.push(`/user/${userId}/trip/${tripId}`);
+  }
+
   render() {
     const {
       rec,
@@ -82,6 +89,7 @@ class SingleRecommendation extends React.Component {
       recCategory,
       ratingValue,
       user,
+      authedUser,
       isAuthedUser,
       authedUserPlannedTrips,
       saveUserRecModal,
@@ -130,8 +138,11 @@ class SingleRecommendation extends React.Component {
 
         <SaveUserRecForm
           saveUserRecModal={saveUserRecModal}
+          rec={rec}
+          authedUser={authedUser}
           authedUserPlannedTrips={authedUserPlannedTrips}
-          toggleSaveUserRecModal={this.toggleSaveUserRecModal}>
+          toggleSaveUserRecModal={this.toggleSaveUserRecModal}
+          routeToSelectedTrip={this.routeToSelectedTrip}>
         </SaveUserRecForm>
       </div>
     );

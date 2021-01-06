@@ -42,7 +42,7 @@ class SingleTrip extends React.Component {
       .catch((err) => console.error('could not get user object', err));
   }
 
-  intializeSingleTripPageData = () => {
+  initializeSingleTripPageData = () => {
     const { tripId, userId } = this.props.match.params;
     this.getTrip(tripId);
     this.getRecommendations(tripId);
@@ -50,7 +50,7 @@ class SingleTrip extends React.Component {
   }
 
   componentDidMount() {
-    this.intializeSingleTripPageData();
+    this.initializeSingleTripPageData();
   }
 
   toggleRecFormModal = () => {
@@ -92,7 +92,7 @@ class SingleTrip extends React.Component {
         <AddOrEditRecForm
           recFormModal={recFormModal}
           editingRec={editingRec}
-          intializeSingleTripPageData={this.intializeSingleTripPageData}
+          initializeSingleTripPageData={this.initializeSingleTripPageData}
           toggleRecFormModal={this.toggleRecFormModal}
           tripId={trip.tripId}>
         </AddOrEditRecForm>
