@@ -9,6 +9,7 @@ import UserData from '../../../helpers/data/UserData';
 import RecPhotoData from '../../../helpers/data/RecPhotoData';
 import RecCategoryData from '../../../helpers/data/RecCategoryData';
 import AuthData from '../../../helpers/data/AuthData';
+import TripData from '../../../helpers/data/TripData';
 
 class SingleRecommendation extends React.Component {
   state = {
@@ -17,6 +18,7 @@ class SingleRecommendation extends React.Component {
     recCategory: '',
     ratingValue: '',
     user: {},
+    authedUserPlannedTrips: [],
     isAuthedUser: false,
     saveUserRecModal: false,
   }
@@ -52,10 +54,21 @@ class SingleRecommendation extends React.Component {
       .catch((err) => console.error('could not get user object', err));
   }
 
+  getAuthedUserPlannedTrips = () => {
+    const authedUuid = AuthData.getUid();
+    AuthData.getUserByUuid(authedUuid)
+      .then((resp) => {
+        TripData.getUsersPlannedTrips(resp.userId)
+          .then((r) => this.setState({ authedUserPlannedTrips: r }));
+      })
+      .catch((err) => console.error('could not get authed user', err));
+  }
+
   componentDidMount() {
     this.getRec();
     this.getRecPhotos();
     this.getUser();
+    this.getAuthedUserPlannedTrips();
   }
 
   toggleSaveUserRecModal = () => {
@@ -70,6 +83,7 @@ class SingleRecommendation extends React.Component {
       ratingValue,
       user,
       isAuthedUser,
+      authedUserPlannedTrips,
       saveUserRecModal,
     } = this.state;
     // to-do: create a gallery or slideshow shared component for rec photos
@@ -116,6 +130,7 @@ class SingleRecommendation extends React.Component {
 
         <SaveUserRecForm
           saveUserRecModal={saveUserRecModal}
+          authedUserPlannedTrips={authedUserPlannedTrips}
           toggleSaveUserRecModal={this.toggleSaveUserRecModal}>
         </SaveUserRecForm>
       </div>

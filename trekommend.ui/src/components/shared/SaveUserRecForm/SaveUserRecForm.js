@@ -11,14 +11,14 @@ class SaveUserRecForm extends React.Component {
   }
 
   render() {
-    const { saveUserRecModal } = this.props;
+    const { saveUserRecModal, authedUserPlannedTrips } = this.props;
 
     // to do - add an option to create a new trip from here if planned trip doesn't already exist
     return (
       <Modal className="SaveUserRecForm" isOpen={saveUserRecModal} toggle={this.toggleSaveRecModal}>
         <ModalHeader>Add Rec to Your Trip</ModalHeader>
         <ModalBody>
-          yo - select from your planned trips below
+          {authedUserPlannedTrips.map((trip) => <p>{trip.name}</p>)}
         </ModalBody>
       </Modal>
     );
