@@ -50,7 +50,8 @@ class SaveUserRecForm extends React.Component {
           <Form>
             <FormGroup>
               <Label for="planned-trips">Select from your planned trips:</Label>
-              <Input type="select" name="rec-rating" id="rec-rating" onChange={this.plannedTripChange}>
+              <Input type="select" name="rec-rating" id="rec-rating" onChange={this.plannedTripChange} required>
+                <option value="" disabled selected hidden>Trips</option>
                 {authedUserPlannedTrips.map((trip, index) => <option key={index} value={trip.tripId}>{trip.name}</option>)}
               </Input>
             </FormGroup>

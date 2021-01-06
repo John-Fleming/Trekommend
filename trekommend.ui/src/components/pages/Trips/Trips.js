@@ -35,7 +35,6 @@ class Trips extends React.Component {
   }
 
   getUserTripData = () => {
-    // to do - update this to instead pulled the authed user id
     const { userId } = this.props.match.params;
     this.getUser(userId);
     this.getUsersTrips(userId);
