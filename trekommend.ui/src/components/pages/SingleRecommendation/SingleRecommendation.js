@@ -2,6 +2,8 @@ import React from 'react';
 import { Rating } from '@material-ui/lab';
 import './SingleRecommendation.scss';
 
+import SaveUserRecForm from '../../shared/SaveUserRecForm/SaveUserRecForm';
+
 import RecommendationData from '../../../helpers/data/RecommendationData';
 import UserData from '../../../helpers/data/UserData';
 import RecPhotoData from '../../../helpers/data/RecPhotoData';
@@ -16,6 +18,7 @@ class SingleRecommendation extends React.Component {
     ratingValue: '',
     user: {},
     isAuthedUser: false,
+    saveUserRecModal: false,
   }
 
   getRec = () => {
@@ -55,9 +58,8 @@ class SingleRecommendation extends React.Component {
     this.getUser();
   }
 
-  addToPlannedTrip = () => {
-    // to do: this will launch something to add rec to your own planned trip
-    console.error('save this rec to your own planned trip and update current rec TimesSaved property');
+  toggleSaveUserRecModal = () => {
+    this.setState({ saveUserRecModal: !this.state.saveUserRecModal });
   }
 
   render() {
@@ -68,6 +70,7 @@ class SingleRecommendation extends React.Component {
       ratingValue,
       user,
       isAuthedUser,
+      saveUserRecModal,
     } = this.state;
     // to-do: create a gallery or slideshow shared component for rec photos
 
@@ -104,12 +107,17 @@ class SingleRecommendation extends React.Component {
 
             { isAuthedUser
               ? ''
-              : <button className="btn btn-outline-dark save-rec-btn" onClick={this.addToPlannedTrip} >Save</button>
+              : <button className="btn btn-outline-dark save-rec-btn" onClick={this.toggleSaveUserRecModal} >Save</button>
             }
 
             <p className="subtle-text">Times Saved: {rec.timesSaved}</p>
           </div>
         </div>
+
+        <SaveUserRecForm
+          saveUserRecModal={saveUserRecModal}
+          toggleSaveUserRecModal={this.toggleSaveUserRecModal}>
+        </SaveUserRecForm>
       </div>
     );
   }
