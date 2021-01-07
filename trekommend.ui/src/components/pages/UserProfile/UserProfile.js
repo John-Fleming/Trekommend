@@ -102,18 +102,26 @@ class UserProfile extends React.Component {
       </Link>));
 
     return (
-      <div className="UserProfile row">
-        <div className="user-container col">
-          <h2>{user.firstName} {user.lastName}</h2>
-          <p className="subtle-text">Member since {getYear(parseJSON(user.dateJoined))}</p>
-          <button className="btn" onClick={this.handleLogout}>Logout</button>
-        </div>
-        <div className="user-stats-container col">
-          <h4>
-            <span><Link to={`/trips/${user.userId}`} className="custom-link btn user-stats-container-btns">{tripCount} Trips</Link></span>
-            <span><button onClick={this.toggleFollowers} className="btn user-stats-container-btns">{followers.length} Followers</button></span>
-            <span><button onClick={this.toggleFollowing} className="btn user-stats-container-btns">{following.length} Following</button></span>
-          </h4>
+      <div className="UserProfile ">
+        <div className="user-container col-md-6 col-10 offset-3">
+          <h2 className="user-container-username">{user.firstName} {user.lastName}</h2>
+          <button className="btn logout-btn ml-auto" onClick={this.handleLogout}><i className="fas fa-sign-out-alt"></i></button>
+
+          <p className="subtle-text mt-2">Member since {getYear(parseJSON(user.dateJoined))}</p>
+
+          <div className="row mt-4">
+            <div className="user-container-avatar-container col-4">
+              <img className="user-avatar" src={user.userPhoto} alt={`${user.firstName} ${user.lastName}`}/>
+            </div>
+
+            <div className="user-stats-container col-8">
+              <h4 className="mx-auto">
+                <span className="stat-container"><Link to={`/trips/${user.userId}`} className="custom-link btn user-stats-container-btns">{tripCount} Trips</Link></span>
+                <span className="stat-container"><button onClick={this.toggleFollowers} className="btn user-stats-container-btns">{followers.length} Followers</button></span>
+                <span className="stat-container"><button onClick={this.toggleFollowing} className="btn user-stats-container-btns">{following.length} Following</button></span>
+              </h4>
+            </div>
+          </div>
         </div>
 
         <Modal className="followersModal" isOpen={followersModal} toggle={this.toggleFollowers}>
