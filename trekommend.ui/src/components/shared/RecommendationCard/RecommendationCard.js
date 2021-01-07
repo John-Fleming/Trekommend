@@ -24,8 +24,8 @@ class RecomendationCard extends React.Component {
         <div className="base-card-details">
           <h4 className="base-card-details-title">{rec.title}</h4>
           { rec.rating !== null
-            ? <Rating name="read-only" value={rec.rating} size="small" readOnly />
-            : ''
+            ? <Rating className="base-card-details-rating" name="read-only" value={rec.rating} size="small" readOnly />
+            : <span className="base-card-details-subtitle">Planned</span>
           }
           <span className="base-card-details-username subtle-text">{user.firstName} {user.lastName}</span>
         </div>

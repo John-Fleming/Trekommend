@@ -6,14 +6,18 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 import './UserProfile.scss';
 
+import RecommendationCard from '../../shared/RecommendationCard/RecommendationCard';
+
 import UserData from '../../../helpers/data/UserData';
 import TripData from '../../../helpers/data/TripData';
+import RecommendationData from '../../../helpers/data/RecommendationData';
 import RelationshipsData from '../../../helpers/data/RelationshipsData';
 import AuthData from '../../../helpers/data/AuthData';
 
 class UserProfile extends React.Component {
   state = {
     user: {},
+    userRecs: [],
     tripCount: '',
     followers: [],
     following: [],
@@ -55,12 +59,19 @@ class UserProfile extends React.Component {
       .catch((err) => console.error('could not get users being followed', err));
   }
 
+  getUserRecentRecs = (userId) => {
+    RecommendationData.getRecentRecommendationsByUserId(userId)
+      .then((resp) => this.setState({ userRecs: resp }))
+      .catch((err) => console.error('could not get recent user recs', err));
+  }
+
   getAllUserData = () => {
     const { userId } = this.props.match.params;
     this.getUser(userId);
     this.getTripsCount(userId);
     this.getFollowers(userId);
     this.getFollowing(userId);
+    this.getUserRecentRecs(userId);
   }
 
   componentDidMount() {
@@ -97,6 +108,7 @@ class UserProfile extends React.Component {
   render() {
     const {
       user,
+      userRecs,
       tripCount,
       followers,
       following,
@@ -113,7 +125,7 @@ class UserProfile extends React.Component {
       </Link>));
 
     return (
-      <div className="UserProfile ">
+      <div className="UserProfile">
         <div className="user-container col-md-6 col-10 offset-3">
           <h2 className="user-container-username">{user.firstName} {user.lastName}</h2>
 
@@ -148,6 +160,10 @@ class UserProfile extends React.Component {
           <ModalHeader>Following</ModalHeader>
           <ModalBody>{buildUsersList(following)}</ModalBody>
         </Modal>
+
+        <div className="user-recent-recs-container col-md-8 col-10 mx-auto my-5">
+          {userRecs.map((rec, index) => <RecommendationCard key={index} rec={rec} user={user}/>)}
+        </div>
       </div>
     );
   }

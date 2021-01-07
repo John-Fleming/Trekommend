@@ -41,37 +41,11 @@
       }
     }
   }
+
+  .user-recent-recs-container {  
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin-top: 1.2rem;
+  }
 }
-
-
-// centered
-// .UserProfile {
-//   display: relative;
-
-//   .user-container {
-//     margin: 3rem auto;
-
-//     &-avatar-container {
-//       display: flex;
-//       align-items: center;
-
-//       .user-avatar {
-//         width: 30%;
-//         height: auto;
-//         border-radius: 50%;
-//       }
-//     }
-    
-//     .user-stats-container-btns {
-//       font-size: 24px;
-//     }
-//   }
-
-
-//   // .logout-btn {
-//   //   display: absolute;
-//   //   bottom: 0;
-//   //   right: 0;
-//   // }
-// }
-

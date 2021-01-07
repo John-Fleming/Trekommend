@@ -22,7 +22,7 @@ namespace Trekommend.Data
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sql = $"select * from recommendations where UserId = @uid";
+            var sql = $"select * from recommendations where UserId = @uid order by recId desc";
 
             var parameters = new { uid = userId };
 
