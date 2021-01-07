@@ -2,11 +2,14 @@ import React from 'react';
 import { Rating } from '@material-ui/lab';
 import './SingleRecommendation.scss';
 
+import SaveUserRecForm from '../../shared/SaveUserRecForm/SaveUserRecForm';
+
 import RecommendationData from '../../../helpers/data/RecommendationData';
 import UserData from '../../../helpers/data/UserData';
 import RecPhotoData from '../../../helpers/data/RecPhotoData';
 import RecCategoryData from '../../../helpers/data/RecCategoryData';
 import AuthData from '../../../helpers/data/AuthData';
+import TripData from '../../../helpers/data/TripData';
 
 class SingleRecommendation extends React.Component {
   state = {
@@ -15,7 +18,10 @@ class SingleRecommendation extends React.Component {
     recCategory: '',
     ratingValue: '',
     user: {},
+    authedUser: {},
+    authedUserPlannedTrips: [],
     isAuthedUser: false,
+    saveUserRecModal: false,
   }
 
   getRec = () => {
@@ -49,15 +55,31 @@ class SingleRecommendation extends React.Component {
       .catch((err) => console.error('could not get user object', err));
   }
 
+  getAuthedUserPlannedTrips = () => {
+    const authedUuid = AuthData.getUid();
+    AuthData.getUserByUuid(authedUuid)
+      .then((resp) => {
+        this.setState({ authedUser: resp });
+        TripData.getUsersPlannedTrips(resp.userId)
+          .then((r) => this.setState({ authedUserPlannedTrips: r }));
+      })
+      .catch((err) => console.error('could not get authed user', err));
+  }
+
   componentDidMount() {
     this.getRec();
     this.getRecPhotos();
     this.getUser();
+    this.getAuthedUserPlannedTrips();
   }
 
-  addToPlannedTrip = () => {
-    // to do: this will launch something to add rec to your own planned trip
-    console.error('save this rec to your own planned trip and update current rec TimesSaved property');
+  toggleSaveUserRecModal = () => {
+    this.setState({ saveUserRecModal: !this.state.saveUserRecModal });
+  }
+
+  routeToSelectedTrip = (userId, tripId) => {
+    this.toggleSaveUserRecModal();
+    this.props.history.push(`/user/${userId}/trip/${tripId}`);
   }
 
   render() {
@@ -67,7 +89,10 @@ class SingleRecommendation extends React.Component {
       recCategory,
       ratingValue,
       user,
+      authedUser,
       isAuthedUser,
+      authedUserPlannedTrips,
+      saveUserRecModal,
     } = this.state;
     // to-do: create a gallery or slideshow shared component for rec photos
 
@@ -104,12 +129,21 @@ class SingleRecommendation extends React.Component {
 
             { isAuthedUser
               ? ''
-              : <button className="btn btn-outline-dark save-rec-btn" onClick={this.addToPlannedTrip} >Save</button>
+              : <button className="btn btn-outline-dark save-rec-btn" onClick={this.toggleSaveUserRecModal} >Save</button>
             }
 
             <p className="subtle-text">Times Saved: {rec.timesSaved}</p>
           </div>
         </div>
+
+        <SaveUserRecForm
+          saveUserRecModal={saveUserRecModal}
+          rec={rec}
+          authedUser={authedUser}
+          authedUserPlannedTrips={authedUserPlannedTrips}
+          toggleSaveUserRecModal={this.toggleSaveUserRecModal}
+          routeToSelectedTrip={this.routeToSelectedTrip}>
+        </SaveUserRecForm>
       </div>
     );
   }

@@ -7,6 +7,15 @@ const getTripsByUserId = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const getUsersPlannedTrips = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/trips/${userId}`)
+    .then((response) => {
+      const userTrips = response.data;
+      resolve(userTrips.filter((trip) => trip.isPlanned));
+    })
+    .catch((err) => reject(err));
+});
+
 const getUserTripCount = (userId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/trips/${userId}`)
     .then((response) => resolve(response.data.length))
@@ -25,4 +34,4 @@ const addNewTrip = (newTrip) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getTripsByUserId, getUserTripCount, getSingleTrip, addNewTrip}; //eslint-disable-line
+export default {getTripsByUserId, getUsersPlannedTrips, getUserTripCount, getSingleTrip, addNewTrip}; //eslint-disable-line

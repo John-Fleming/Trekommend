@@ -66,7 +66,7 @@ class AddOrEditRecForm extends React.Component {
   }
 
   submitRec = () => {
-    const { intializeSingleTripPageData, tripId } = this.props;
+    const { initializeSingleTripPageData, tripId } = this.props;
     const { title, recCategoryId, rating, review, description, photoUrl } = this.state; // eslint-disable-line
     const newRec = {
       userId: 1,
@@ -89,7 +89,7 @@ class AddOrEditRecForm extends React.Component {
 
           this.submitRecPhoto(newPhoto);
         }
-        intializeSingleTripPageData();
+        initializeSingleTripPageData();
         this.toggleRecModal();
       })
       .catch((err) => console.error('could not add new recommendation', err));
