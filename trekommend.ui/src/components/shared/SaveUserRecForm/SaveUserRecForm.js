@@ -18,6 +18,7 @@ class SaveUserRecForm extends React.Component {
   toggleSaveRecModal = (e) => {
     e.preventDefault();
     const { toggleSaveUserRecModal } = this.props;
+    this.setState({ selectedTripId: '' });
     toggleSaveUserRecModal();
   }
 
@@ -41,6 +42,7 @@ class SaveUserRecForm extends React.Component {
 
   render() {
     const { saveUserRecModal, authedUserPlannedTrips } = this.props;
+    const { selectedTripId } = this.state;
 
     // to do - add an option to create a new trip from here if planned trip doesn't already exist
     return (
@@ -50,8 +52,8 @@ class SaveUserRecForm extends React.Component {
           <Form>
             <FormGroup>
               <Label for="planned-trips">Select from your planned trips:</Label>
-              <Input type="select" name="rec-rating" id="rec-rating" onChange={this.plannedTripChange} required>
-                <option value="" disabled selected hidden>Trips</option>
+              <Input type="select" name="rec-rating" id="rec-rating" defaultValue={selectedTripId} onChange={this.plannedTripChange} required>
+                <option value="" disabled hidden>Trips</option>
                 {authedUserPlannedTrips.map((trip, index) => <option key={index} value={trip.tripId}>{trip.name}</option>)}
               </Input>
             </FormGroup>
