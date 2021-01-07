@@ -44,6 +44,14 @@ class Trips extends React.Component {
     this.getUserTripData();
   }
 
+  componentDidUpdate(prevProps) {
+    const { userId } = this.props.match.params;
+    const prevUserId = prevProps.match.params.userId;
+    if (prevUserId !== userId) {
+      this.getUserTripData(userId);
+    }
+  }
+
   toggleTripFormModal = () => {
     this.setState({ tripFormModal: !this.state.tripFormModal });
   }

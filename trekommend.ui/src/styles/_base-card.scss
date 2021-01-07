@@ -32,12 +32,21 @@
       text-transform: uppercase;
     }
 
+    &-rating {
+      border-top: 1px solid #aaa;
+      padding-top: .6rem;
+    }
+
     &-username {
       position: absolute;
       bottom: 0;
       right: 0;
       font-size: .8rem;
     }
+  }
+
+  .Rating {
+    margin-top: .1rem !important;
   }
 }
 
