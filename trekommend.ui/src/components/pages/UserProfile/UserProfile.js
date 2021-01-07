@@ -19,11 +19,21 @@ class UserProfile extends React.Component {
     following: [],
     followersModal: false,
     followingModal: false,
+    isAuthedUser: false,
   }
 
   getUser = (userId) => {
     UserData.getUserByUserId(userId)
-      .then((resp) => this.setState({ user: resp }))
+      .then((resp) => {
+        this.setState({ user: resp });
+        const authedUserUid = AuthData.getUid();
+
+        if (resp.uuid === authedUserUid) {
+          this.setState({ isAuthedUser: true });
+        } else {
+          this.setState({ isAuthedUser: false });
+        }
+      })
       .catch((err) => console.error('could not get user object', err));
   }
 
@@ -92,6 +102,7 @@ class UserProfile extends React.Component {
       following,
       followersModal,
       followingModal,
+      isAuthedUser,
     } = this.state;
     // to do: add recent activity feed component below user stats (render followers activity on authed user profile or user being viewed recent activity if on their profile)
     const buildUsersList = (usersList) => usersList.map((u, index) => (
@@ -105,7 +116,11 @@ class UserProfile extends React.Component {
       <div className="UserProfile ">
         <div className="user-container col-md-6 col-10 offset-3">
           <h2 className="user-container-username">{user.firstName} {user.lastName}</h2>
-          <button className="btn logout-btn ml-auto" onClick={this.handleLogout}><i className="fas fa-sign-out-alt"></i></button>
+
+          { isAuthedUser
+            ? <button className="btn logout-btn ml-auto" onClick={this.handleLogout}><i className="fas fa-sign-out-alt"></i></button>
+            : ''
+          }
 
           <p className="subtle-text mt-2">Member since {getYear(parseJSON(user.dateJoined))}</p>
 
