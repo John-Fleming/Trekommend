@@ -133,8 +133,8 @@ class UserProfile extends React.Component {
             ? <button className="btn logout-btn ml-auto" onClick={this.handleLogout}><i className="fas fa-sign-out-alt"></i></button>
             : ''
           }
-
-          <p className="subtle-text mt-2">Member since {getYear(parseJSON(user.dateJoined))}</p>
+          <br/>
+          <p className="subtle-text member-since mt-2">Member since {getYear(parseJSON(user.dateJoined))}</p>
 
           <div className="row mt-4">
             <div className="user-container-avatar-container col-4">

@@ -6,14 +6,17 @@
 
     &-username {
       display: inline;
-      font-family: 'Crimson-Text';
       letter-spacing: 1.5px;
-      padding-bottom: .3rem;
-      border-bottom: 1.25px solid black;
     }
 
     .logout-btn {
       float: right;
+    }
+
+    .member-since {
+      display: inline-block;
+      border-top: 1.25px solid black;
+      padding-top: .3rem;
     }
 
     &-avatar-container {
@@ -24,6 +27,11 @@
         width: 100%;
         height: auto;
         border-radius: 50%;
+
+        @media only screen 
+        and (max-width: 812px) { 
+          width: 80%;
+        }
       }
     }
     
@@ -34,6 +42,11 @@
 
       .user-stats-container-btns {
         font-size: 1.5rem;
+
+        @media only screen 
+        and (max-width: 812px) { 
+          font-size: .9rem;
+        }
       }
 
       .user-stats-container-btns:hover {
