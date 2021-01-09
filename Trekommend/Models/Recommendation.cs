@@ -17,5 +17,6 @@ namespace Trekommend.Models
         public string Description { get; set; }
         public int TimesSaved{ get; set; }
         public IEnumerable<RecommendationPhoto> Photos { get; internal set; }
+        public User User { get; internal set; }
     }
 }

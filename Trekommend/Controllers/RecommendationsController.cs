@@ -16,12 +16,14 @@ namespace Trekommend.Controllers
         RecommendationsRepository _repo;
         RecPhotosRepository _photosRepo;
         RelationshipsRepository _relationshipsRepo;
+        UsersRepository _usersrepo;
 
-        public RecommendationsController(RecommendationsRepository repo, RecPhotosRepository photosrepo, RelationshipsRepository relationshipsrepo)
+        public RecommendationsController(RecommendationsRepository repo, RecPhotosRepository photosrepo, RelationshipsRepository relationshipsrepo, UsersRepository usersrepo)
         {
             _repo = repo;
             _photosRepo = photosrepo;
             _relationshipsRepo = relationshipsrepo;
+            _usersrepo = usersrepo;
         }
 
         [HttpGet("{userId}")]
@@ -51,6 +53,7 @@ namespace Trekommend.Controllers
             foreach (var rec in recs)
             {
                 rec.Photos = photos.Where(p => p.RecId == rec.RecId);
+                rec.User = _usersrepo.GetById(rec.UserId);
             }
 
             return Ok(recs);

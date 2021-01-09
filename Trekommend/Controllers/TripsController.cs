@@ -15,11 +15,13 @@ namespace Trekommend.Controllers
     {
         TripsRepository _repo;
         RelationshipsRepository _relationshipsRepo;
+        UsersRepository _usersrepo;
 
-        public TripsController(TripsRepository repo, RelationshipsRepository relationshipsrepo)
+        public TripsController(TripsRepository repo, RelationshipsRepository relationshipsrepo, UsersRepository usersrepo)
         {
             _repo = repo;
             _relationshipsRepo = relationshipsrepo;
+            _usersrepo = usersrepo;
         }
 
         [HttpGet("{userId}")]
@@ -35,6 +37,11 @@ namespace Trekommend.Controllers
             var usersFollowingIds = _relationshipsRepo.GetUsersBeingFollowed(userId).Select(user => user.UserId);
 
             var trips = _repo.GetMultipleUsersTrips(usersFollowingIds);
+
+            foreach (var trip in trips)
+            {
+                trip.User = _usersrepo.GetById(trip.UserId);
+            }
 
             return Ok(trips);
         }
