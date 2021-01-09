@@ -30,6 +30,19 @@ namespace Trekommend.Data
 
             return userRecommendations;
         }
+        
+        public IEnumerable<Recommendation> GetMultipleUsersRecommendations(IEnumerable<int> userIds)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sql = $"select * from recommendations where UserId in @uids order by recId desc";
+
+            var parameters = new { uids = userIds };
+
+            var allUserRecommendations = db.Query<Recommendation>(sql, parameters);
+
+            return allUserRecommendations;
+        }
 
         public IEnumerable<Recommendation> GetRecsByTrip(int tripId)
         {

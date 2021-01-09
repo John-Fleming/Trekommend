@@ -14,10 +14,12 @@ namespace Trekommend.Controllers
     public class TripsController : ControllerBase
     {
         TripsRepository _repo;
+        RelationshipsRepository _relationshipsRepo;
 
-        public TripsController(TripsRepository repo)
+        public TripsController(TripsRepository repo, RelationshipsRepository relationshipsrepo)
         {
             _repo = repo;
+            _relationshipsRepo = relationshipsrepo;
         }
 
         [HttpGet("{userId}")]
@@ -26,7 +28,17 @@ namespace Trekommend.Controllers
             var usersTrips = _repo.GetUsersTrips(userId);
             return Ok(usersTrips);
         }
-        
+
+        [HttpGet("{userId}/followingTrips")]
+        public IActionResult GetAllUserFollowingTripsByUserId(int userId)
+        {
+            var usersFollowingIds = _relationshipsRepo.GetUsersBeingFollowed(userId).Select(user => user.UserId);
+
+            var trips = _repo.GetMultipleUsersTrips(usersFollowingIds);
+
+            return Ok(trips);
+        }
+
         [HttpGet("singleTrip/{tripId}")]
         public IActionResult GetSingleTrip(int tripId)
         {

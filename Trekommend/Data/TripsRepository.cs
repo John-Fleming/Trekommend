@@ -30,6 +30,19 @@ namespace Trekommend.Data
 
             return usersTrips;
         }
+
+        public IEnumerable<Trip> GetMultipleUsersTrips(IEnumerable<int> userIds)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sql = $"select * from Trips where UserId in @uids Order By tripId desc";
+
+            var parameters = new { uids = userIds };
+
+            var allUsersTrips = db.Query<Trip>(sql, parameters);
+
+            return allUsersTrips;
+        }
         
         public Trip GetTrip(int tripId)
         {
