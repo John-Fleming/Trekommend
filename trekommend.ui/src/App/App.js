@@ -17,25 +17,12 @@ import SingleTrip from '../components/pages/SingleTrip/SingleTrip';
 import SingleRecommendation from '../components/pages/SingleRecommendation/SingleRecommendation';
 import Login from '../components/pages/Login/Login';
 import DiscoverTripsAndRecs from '../components/pages/DiscoverTripsAndRecs/DiscoverTripsAndRecs';
+import Home from '../components/pages/Home/Home';
 
 import fbConnection from '../helpers/data/connection';
 import AuthData from '../helpers/data/AuthData';
 
 fbConnection();
-
-const PublicRoute = ({ component: Component, authed, ...rest }) => {
-  const routeChecker = (props) => (authed === false
-    ? (<Component {...props} />)
-    : (<Redirect to={{ pathname: '/home', state: { from: props.location } }} />));
-  return <Route {...rest} render={(props) => routeChecker(props)} />;
-};
-
-const PrivateRoute = ({ component: Component, authed, ...rest }) => {
-  const routeChecker = (props) => (authed === true
-    ? (<Component {...props} />)
-    : (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />));
-  return <Route {...rest} render={(props) => routeChecker(props)} />;
-};
 
 class App extends React.Component {
   state = {
@@ -73,12 +60,13 @@ class App extends React.Component {
           <React.Fragment>
             <MyNavbar authed={authed} authedUser={authedUser}></MyNavbar>
               <Switch>
-                <PrivateRoute path='/user/:userId/trip/:tripId' component={SingleTrip} authed={authed} authedUser={authedUser}/>
-                <PrivateRoute path='/user/:userId/recommendation/:recommendationId' component={SingleRecommendation} authed={authed} authedUser={authedUser}/>
-                <PrivateRoute path='/trips/:userId' component={Trips} authed={authed} authedUser={authedUser}/>
-                <PrivateRoute path='/profile/:userId' component={UserProfile} authed={authed} authedUser={authedUser}/>
-                <PrivateRoute path='/discover' component={DiscoverTripsAndRecs} authed={authed} authedUser={authedUser}/>
-                <PublicRoute path='/login' component={Login} authed={authed} />
+                <Route path='/user/:userId/trip/:tripId' component={SingleTrip} authed={authed} authedUser={authedUser}/>
+                <Route path='/user/:userId/recommendation/:recommendationId' component={SingleRecommendation} authed={authed} authedUser={authedUser}/>
+                <Route path='/trips/:userId' component={Trips} authed={authed} authedUser={authedUser}/>
+                <Route path='/profile/:userId' component={UserProfile} authed={authed} authedUser={authedUser}/>
+                <Route path='/discover' component={DiscoverTripsAndRecs} authed={authed} authedUser={authedUser}/>
+                <Route path='/login' component={Login} authed={authed} />
+                <Route path='/' component={Home} authed={authed} authedUser={authedUser}/>
                 <Redirect from="*" to="/" />
               </Switch>
           </React.Fragment>

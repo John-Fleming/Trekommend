@@ -18,7 +18,7 @@ class MyNavbar extends React.Component {
       return (
         <div className="MyNavbar">
             <Navbar color="light" light>
-              <NavLink tag={RRNavLink} to="/home" className="brand-header navbar-brand">Trekommend</NavLink>
+              <NavLink tag={RRNavLink} to="/" className="brand-header navbar-brand">Trekommend</NavLink>
                 <Nav className="ml-auto flex-row" navbar>
                   <NavItem className="mr-2">
                     <NavLink tag={RRNavLink} to="/discover"><i className="fas fa-search text-dark"></i></NavLink>
