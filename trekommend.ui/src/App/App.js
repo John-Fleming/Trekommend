@@ -16,6 +16,7 @@ import Trips from '../components/pages/Trips/Trips';
 import SingleTrip from '../components/pages/SingleTrip/SingleTrip';
 import SingleRecommendation from '../components/pages/SingleRecommendation/SingleRecommendation';
 import Login from '../components/pages/Login/Login';
+import DiscoverTripsAndRecs from '../components/pages/DiscoverTripsAndRecs/DiscoverTripsAndRecs';
 
 import fbConnection from '../helpers/data/connection';
 import AuthData from '../helpers/data/AuthData';
@@ -76,8 +77,7 @@ class App extends React.Component {
                 <PrivateRoute path='/user/:userId/recommendation/:recommendationId' component={SingleRecommendation} authed={authed} authedUser={authedUser}/>
                 <PrivateRoute path='/trips/:userId' component={Trips} authed={authed} authedUser={authedUser}/>
                 <PrivateRoute path='/profile/:userId' component={UserProfile} authed={authed} authedUser={authedUser}/>
-                {/* <PrivateRoute path='/discover' component={SearchResults} authed={authed} authedUser={authedUser}/> */}
-                {/* <PrivateRoute path='/' component={Home} authed={authed} authedUser={authedUser} /> */}
+                <PrivateRoute path='/discover' component={DiscoverTripsAndRecs} authed={authed} authedUser={authedUser}/>
                 <PublicRoute path='/login' component={Login} authed={authed} />
                 <Redirect from="*" to="/" />
               </Switch>

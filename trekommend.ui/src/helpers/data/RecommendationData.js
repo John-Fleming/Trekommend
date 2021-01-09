@@ -7,6 +7,12 @@ const getRecentRecommendationsByUserId = (userId) => new Promise((resolve, rejec
     .catch((err) => reject(err));
 });
 
+const getAllUserFollowingRecommendationsByUserId = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/recommendations/${userId}/followingRecs`)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
 const getRecommendationsByTripId = (tripId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/recommendations/trip/${tripId}`)
     .then((resp) => resolve(resp.data))
@@ -25,4 +31,11 @@ const addNewRec = (newRec) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getRecentRecommendationsByUserId, getRecommendationsByTripId, getSingleRecommendation, addNewRec}; // eslint-disable-line
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+  getRecentRecommendationsByUserId,
+  getAllUserFollowingRecommendationsByUserId,
+  getRecommendationsByTripId,
+  getSingleRecommendation,
+  addNewRec,
+};

@@ -15,11 +15,15 @@ namespace Trekommend.Controllers
     {
         RecommendationsRepository _repo;
         RecPhotosRepository _photosRepo;
+        RelationshipsRepository _relationshipsRepo;
+        UsersRepository _usersrepo;
 
-        public RecommendationsController(RecommendationsRepository repo, RecPhotosRepository photosrepo)
+        public RecommendationsController(RecommendationsRepository repo, RecPhotosRepository photosrepo, RelationshipsRepository relationshipsrepo, UsersRepository usersrepo)
         {
             _repo = repo;
             _photosRepo = photosrepo;
+            _relationshipsRepo = relationshipsrepo;
+            _usersrepo = usersrepo;
         }
 
         [HttpGet("{userId}")]
@@ -35,6 +39,24 @@ namespace Trekommend.Controllers
             }
 
             return Ok(usersRecs);
+        }
+
+        [HttpGet("{userId}/followingRecs")]
+        public IActionResult GetAllUserFollowingRecommendationsByUserId(int userId)
+        {
+            var usersFollowingIds = _relationshipsRepo.GetUsersBeingFollowed(userId).Select(user => user.UserId);
+
+            var recs = _repo.GetMultipleUsersRecommendations(usersFollowingIds);
+
+            var photos = _photosRepo.GetRecPhotos(recs.Select(r => r.RecId));
+
+            foreach (var rec in recs)
+            {
+                rec.Photos = photos.Where(p => p.RecId == rec.RecId);
+                rec.User = _usersrepo.GetById(rec.UserId);
+            }
+
+            return Ok(recs);
         }
 
         [HttpGet("trip/{tripId}")]

@@ -15,5 +15,6 @@ namespace Trekommend.Models
         public DateTime? EndDate { get; set; }
         public string CoverPhoto { get; set; }
         public bool IsPlanned { get; set; }
+        public User User { get; internal set; }
     }
 }
