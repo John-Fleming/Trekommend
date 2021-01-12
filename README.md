@@ -2,7 +2,7 @@
 
 ## Description
 
-Have you ever been looking for a recommendation on TripAdvisor for an upcoming trip, only to discover that one of the top rated actvities for the city is the local mall? Trekommend aims to provide users with a better trip plannaing experience by allowing them to follow other users and curate trip recommendations from people they can trust. 
+Have you ever been looking for a recommendation on TripAdvisor for an upcoming trip, only to discover that one of the top rated actvities for the city is the local mall? Trekommend aims to provide users with a better trip planning experience by allowing them to follow other users and curate trip recommendations from people they can trust. 
 
 After logging in with their Google account, Trekommend users are able to create collections of trips they have taken or are planning to take and save recommended activities, restaurants, landmarks, or events for those trips. When creating a recommendation, users can provide a full review and rating for the recommendation or simply provide a name and brief description for a planned trip. Beyond personal tracking, users can also discover and follow other users, view their trips and recommendations, and save their favorites to trips they are planning. 
 
