@@ -1,8 +1,9 @@
 import React from 'react';
 import { parseJSON, getYear } from 'date-fns';
 import { Link } from 'react-router-dom';
+// import _ from 'lodash';
 
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'; //eslint-disable-line
 
 import './UserProfile.scss';
 
@@ -21,8 +22,11 @@ class UserProfile extends React.Component {
     tripCount: '',
     followers: [],
     following: [],
+    allUsers: [],
     followersModal: false,
     followingModal: false,
+    discoverUsersModal: false,
+    userActionsMenu: false,
     isAuthedUser: false,
   }
 
@@ -39,6 +43,12 @@ class UserProfile extends React.Component {
         }
       })
       .catch((err) => console.error('could not get user object', err));
+  }
+
+  getEveryUser = () => {
+    UserData.getAllUsers()
+      .then((resp) => this.setState({ allUsers: resp }))
+      .catch((err) => console.error('could not get all users', err));
   }
 
   getTripsCount = (userId) => {
@@ -67,10 +77,12 @@ class UserProfile extends React.Component {
 
   getAllUserData = () => {
     const { userId } = this.props.match.params;
+
     this.getUser(userId);
     this.getTripsCount(userId);
     this.getFollowers(userId);
     this.getFollowing(userId);
+    this.getEveryUser();
     this.getUserRecentRecs(userId);
   }
 
@@ -87,7 +99,15 @@ class UserProfile extends React.Component {
   }
 
   routeToUser = () => {
-    this.setState({ followersModal: false, followingModal: false });
+    this.setState({ followersModal: false, followingModal: false, discoverUsersModal: false });
+  }
+
+  toggleDiscoverUsers = () => {
+    this.setState({ discoverUsersModal: !this.state.discoverUsersModal });
+  }
+
+  toggleUserActions = () => {
+    this.setState({ userActionsMenu: !this.state.userActionsMenu });
   }
 
   handleLogout = (e) => {
@@ -112,11 +132,14 @@ class UserProfile extends React.Component {
       tripCount,
       followers,
       following,
+      allUsers,
       followersModal,
       followingModal,
+      discoverUsersModal,
+      userActionsMenu,
       isAuthedUser,
     } = this.state;
-    // to do: add recent activity feed component below user stats (render followers activity on authed user profile or user being viewed recent activity if on their profile)
+
     const buildUsersList = (usersList) => usersList.map((u, index) => (
       <Link to={`/profile/${u.userId}`} onClick={this.routeToUser} className="modal-user custom-link row" key={index}>
         <img className="modal-user-avatar" src={u.userPhoto} alt={`${u.firstName} ${u.lastName}`}/>
@@ -124,13 +147,30 @@ class UserProfile extends React.Component {
         <button className="modal-user-view-profile btn ml-auto"><i className="fas fa-search"></i></button>
       </Link>));
 
+    const renderUserActions = () => (
+      <Dropdown className="user-actions-btn" direction="left" isOpen={userActionsMenu} toggle={this.toggleUserActions}>
+        <DropdownToggle id="dropdown-toggle-btn">
+          <i className="fas fa-bars"></i>
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem onClick={this.handleLogout}>
+            <i className="fas fa-sign-out-alt"></i> Logout
+          </DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem onClick={this.toggleDiscoverUsers}>
+          <i className="fas fa-user-friends"></i> Find Users
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    );
+
     return (
       <div className="UserProfile">
         <div className="user-container col-md-6 col-10 offset-3">
           <h2 className="user-container-username">{user.firstName} {user.lastName}</h2>
 
           { isAuthedUser
-            ? <button className="btn logout-btn ml-auto" onClick={this.handleLogout}><i className="fas fa-sign-out-alt"></i></button>
+            ? renderUserActions()
             : ''
           }
           <br/>
@@ -159,6 +199,11 @@ class UserProfile extends React.Component {
         <Modal className="followingModal" isOpen={followingModal} toggle={this.toggleFollowing}>
           <ModalHeader>Following</ModalHeader>
           <ModalBody>{buildUsersList(following)}</ModalBody>
+        </Modal>
+
+        <Modal className="discoverUsersModal" isOpen={discoverUsersModal} toggle={this.toggleDiscoverUsers}>
+          <ModalHeader>Discover Other Users</ModalHeader>
+          <ModalBody>{buildUsersList(allUsers)}</ModalBody>
         </Modal>
 
         <div className="user-recent-recs-container col-md-8 col-10 mx-auto my-5">
