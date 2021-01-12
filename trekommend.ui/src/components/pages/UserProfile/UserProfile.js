@@ -28,6 +28,7 @@ class UserProfile extends React.Component {
     discoverUsersModal: false,
     userActionsMenu: false,
     isAuthedUser: false,
+    followedByAuthUser: null,
   }
 
   getUser = (userId) => {
@@ -59,7 +60,16 @@ class UserProfile extends React.Component {
 
   getFollowers = (userId) => {
     RelationshipsData.getUserFollowers(userId)
-      .then((resp) => this.setState({ followers: resp }))
+      .then((resp) => {
+        const authedUserUid = AuthData.getUid();
+
+        const foundAuthedUser = resp.filter((u) => u.uuid === authedUserUid);
+
+        this.setState({
+          followers: resp,
+          followedByAuthUser: foundAuthedUser.length > 0,
+        });
+      })
       .catch((err) => console.error('could not get user followers', err));
   }
 
@@ -138,6 +148,7 @@ class UserProfile extends React.Component {
       discoverUsersModal,
       userActionsMenu,
       isAuthedUser,
+      followedByAuthUser,
     } = this.state;
 
     const buildUsersList = (usersList) => usersList.map((u, index) => (
@@ -164,6 +175,12 @@ class UserProfile extends React.Component {
       </Dropdown>
     );
 
+    const renderFollowButtons = () => (
+      followedByAuthUser
+        ? <button className="btn btn-outline-dark follow-btn">Unfollow</button>
+        : <button className="btn btn-outline-dark follow-btn">Follow</button>
+    );
+
     return (
       <div className="UserProfile">
         <div className="user-container col-md-6 col-10 offset-3">
@@ -171,8 +188,9 @@ class UserProfile extends React.Component {
 
           { isAuthedUser
             ? renderUserActions()
-            : ''
+            : renderFollowButtons()
           }
+
           <br/>
           <p className="subtle-text member-since mt-2">Member since {getYear(parseJSON(user.dateJoined))}</p>
 
