@@ -7,4 +7,10 @@ const getUserByUserId = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default { getUserByUserId }; //eslint-disable-line
+const getAllUsers = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/users`)
+    .then((response) => resolve(response.data))
+    .catch((err) => reject(err));
+});
+
+export default { getUserByUserId, getAllUsers }; //eslint-disable-line

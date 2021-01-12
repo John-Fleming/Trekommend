@@ -21,7 +21,7 @@ namespace Trekommend.Data
         public IEnumerable<User> GetAll()
         {
             using var db = new SqlConnection(_connectionString);
-            var sql = $"Select * from users";
+            var sql = $"Select * from users order by firstName";
 
             var users = db.Query<User>(sql);
 

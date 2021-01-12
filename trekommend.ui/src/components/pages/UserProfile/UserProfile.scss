@@ -9,8 +9,18 @@
       letter-spacing: 1.5px;
     }
 
-    .logout-btn {
+    .user-actions-btn {
       float: right;
+    }
+
+    .DropdownMenu {
+      border-radius: 1rem;
+    }
+
+    #dropdown-toggle-btn {
+      background-color: #f4f4f6;
+      color: black;
+      border: none;
     }
 
     .member-since {
@@ -41,7 +51,7 @@
       justify-content: space-evenly;
 
       .user-stats-container-btns {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
 
         @media only screen 
         and (max-width: 812px) { 
