@@ -129,7 +129,23 @@ class UserProfile extends React.Component {
         };
 
         RelationshipsData.followAUser(newFollow)
-          .then(this.setState({ followedByAuthUser: true }));
+          .then(() => {
+            this.setState({ followedByAuthUser: true });
+            this.getAllUserData(user.userId);
+          });
+      })
+      .catch((err) => console.error('could not get authed user', err));
+  }
+
+  unfollowUser = () => {
+    const { user } = this.state;
+    AuthData.getUserByUuid(AuthData.getUid())
+      .then((resp) => {
+        RelationshipsData.unfollowAUser(resp.userId, user.userId)
+          .then(() => {
+            this.setState({ followedByAuthUser: false });
+            this.getAllUserData(user.userId);
+          });
       })
       .catch((err) => console.error('could not get authed user', err));
   }

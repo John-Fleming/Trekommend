@@ -19,4 +19,10 @@ const followAUser = (newFollow) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getUserFollowers, getUsersBeingFollowed, followAUser}; // eslint-disable-line
+const unfollowAUser = (userId, unfollowedUserId) => new Promise((resolve, reject) => {
+  axios.delete(`${baseUrl}/relationships/${userId}/unfollow/${unfollowedUserId}`)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
+export default {getUserFollowers, getUsersBeingFollowed, followAUser, unfollowAUser}; // eslint-disable-line
