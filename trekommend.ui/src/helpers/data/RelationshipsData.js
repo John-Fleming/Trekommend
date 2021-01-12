@@ -13,4 +13,10 @@ const getUsersBeingFollowed = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getUserFollowers, getUsersBeingFollowed}; // eslint-disable-line
+const followAUser = (newFollow) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/relationships`, newFollow)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
+export default {getUserFollowers, getUsersBeingFollowed, followAUser}; // eslint-disable-line

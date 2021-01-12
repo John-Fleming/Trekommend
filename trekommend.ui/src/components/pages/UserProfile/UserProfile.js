@@ -62,7 +62,6 @@ class UserProfile extends React.Component {
     RelationshipsData.getUserFollowers(userId)
       .then((resp) => {
         const authedUserUid = AuthData.getUid();
-
         const foundAuthedUser = resp.filter((u) => u.uuid === authedUserUid);
 
         this.setState({
@@ -118,6 +117,21 @@ class UserProfile extends React.Component {
 
   toggleUserActions = () => {
     this.setState({ userActionsMenu: !this.state.userActionsMenu });
+  }
+
+  followUser = () => {
+    const { user } = this.state;
+    AuthData.getUserByUuid(AuthData.getUid())
+      .then((resp) => {
+        const newFollow = {
+          userBeingFollowedId: user.userId,
+          userFollowingId: resp.userId,
+        };
+
+        RelationshipsData.followAUser(newFollow)
+          .then(this.setState({ followedByAuthUser: true }));
+      })
+      .catch((err) => console.error('could not get authed user', err));
   }
 
   handleLogout = (e) => {
@@ -177,8 +191,8 @@ class UserProfile extends React.Component {
 
     const renderFollowButtons = () => (
       followedByAuthUser
-        ? <button className="btn btn-outline-dark follow-btn">Unfollow</button>
-        : <button className="btn btn-outline-dark follow-btn">Follow</button>
+        ? <button className="btn btn-outline-dark follow-btn" onClick={this.unfollowUser}>Unfollow</button>
+        : <button className="btn btn-outline-dark follow-btn" onClick={this.followUser}>Follow</button>
     );
 
     return (
