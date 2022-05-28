@@ -47,7 +47,3 @@ Actions available to the user will change when viewing another user's profile
 When viewing another user's recommendation, a save button will be available that triggers a form for the user to add it to one of their planned trips.
 
 ![save rec form](https://i.imgur.com/pzw5hxa.png)
-
-
-## Live App
-Deployed link coming soon!
